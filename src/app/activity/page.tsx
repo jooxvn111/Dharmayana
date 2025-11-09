@@ -15,12 +15,10 @@ export default function ActivityPage() {
         </Col>
       </Row>
 
-      {/* --- Kegiatan 1 (Gambar Kiri) --- */}
-      {/* Kita beri background terang agar kontras & mudah dibaca */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
         <Col md={6}>
           <Image 
-            src="/images/dwp.jpeg" // Ganti dengan gambar kegiatan
+            src="/images/dwp.jpeg"
             alt="Welcoming Party"
             fluid 
             rounded 
@@ -30,39 +28,36 @@ export default function ActivityPage() {
         <Col md={6}>
           <h2 className="fw-bold">Dharmayana Welcoming Party</h2>
           <p>
-            (Teman Anda bisa mengisi deskripsi lengkap di sini...)
-            program kerja yang bertujuan menyambut mahasiswa baru Buddhis Universitas Tarumanagara.
+            Dharmayana Welcoming Party adalah program kerja yang diadakan setiap awal periode. Tujuan dari diadakannya Program Kerja ini adalah untuk menarik mahasiswa baru yang beragama buddhist dengan mengenalkan mereka KMB Dharmayana dalam lingkungan kampus dan berbagai proker juga kepengurusan yang ada  
           </p>
           <Button variant="dark">Lihat Galeri</Button>
         </Col>
       </Row>
       
-      {/* --- Kegiatan 2 (Gambar Kanan) --- */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
-        <Col md={6} className="order-md-2"> {/* order-md-2 memindah gambar ke kanan di layar besar */}
+        <Col md={6} className="order-md-2"> 
           <Image 
-            src="/images/kathina.jpeg" // Ganti dengan gambar kegiatan
+            src="/images/kathina.jpeg" 
             alt="Kathina"
             fluid 
             rounded 
             className="shadow-sm"
           />
         </Col>
-        <Col md={6} className="order-md-1"> {/* order-md-1 memindah teks ke kiri */}
+        <Col md={6} className="order-md-1"> 
           <h2 className="fw-bold">Pindapata dan Sangha Dana</h2>
           <p>
-            (Teman Anda bisa mengisi deskripsi lengkap di sini...)
-            program kerja yang dilaksanakan untuk memperingati salah satu hari besar agama Buddha, yaitu Hari Suci Kathina.
+            Kathina adalah Program Kerja Dharmayana yang dilaksanakan untuk memperingati salah satu hari besar agama Buddhist yaitu Hari Kathina. 
+            Hari Kathina merupakan hari dimana para bhikkhu menerima kain baru dari umat Buddha setelah menyelesaikan masa Vassa (retret musim hujan) selama tiga bulan.  
           </p>
           <Button variant="dark">Lihat Galeri</Button>
         </Col>
       </Row>
       
-      {/* --- Kegiatan 3 (Gambar Kiri) --- */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
         <Col md={6}>
           <Image 
-            src="/images/dd.jpeg" // Ganti dengan gambar kegiatan
+            src="/images/dd.jpeg" 
             alt="Darmadhista"
             fluid 
             rounded 
@@ -72,14 +67,13 @@ export default function ActivityPage() {
         <Col md={6}>
           <h2 className="fw-bold">Darmadhista</h2>
           <p>
-            (Teman Anda bisa mengisi deskripsi lengkap di sini...)
-            program kerja yang bertujuan untuk membina hubungan antara mahasiswa baru Buddhis yang menjadi anggota Dharmayana.
+            Darmadhista adalah program kerja Dharmayana yang diadakan setiap tahunnya sebagai ajang kompetisi seni dan budaya buddhis antar mahasiswa buddhis di Indonesia. 
+            Acara ini bertujuan untuk mempererat tali persaudaraan antar mahasiswa buddhis serta melestarikan seni dan budaya buddhis di kalangan generasi muda.
+            Biasanya acara ini diadakan selama dua hari dengan berbagai rangkaian kegiatan seperti games, pelatihan sila dan kompetisi antar kelompok.
           </p>
           <Button variant="dark">Lihat Galeri</Button>
         </Col>
       </Row>
-
-      {/* Teman Anda bisa duplikat <Row> di atas untuk kegiatan lainnya */}
 
     </Container>
   );

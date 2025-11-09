@@ -1,15 +1,11 @@
 /* src/app/custom.css */
 
 body {
-  background-color: #8B7348 !important; /* Warna Cokelat Anda */
+  background-color: #8B7348 !important; 
   
-  /* Teks default di background cokelat (misal: "Kegiatan Dharmayana") */
-  color: #f8f9fa; /* Putih keabuan */
+  color: #f8f9fa; 
 }
 
-/* Pastikan style .navbar-light dari sebelumnya MASIH ADA 
-  agar link navbar Anda tetap terlihat di background putih.
-*/
 .navbar-light .navbar-nav .nav-link {
   color: rgba(0, 0, 0, 0.7) !important; 
 }
@@ -50,25 +46,21 @@ body {
   z-index: 2;
 }
 
-/* --- Override warna untuk section di page.tsx Anda --- */
-.bg-brown-dharmayana { /* Nama class custom agar tidak konflik */
+.bg-brown-dharmayana { 
   background-color: var(--dh-brown) !important;
   color: white;
 }
 
-/* Style tambahan untuk text-center di Hero Section */
 .hero-section .display-3, .hero-section .lead {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* Efek bayangan agar teks lebih terbaca */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7); 
 }
 
 body {
-  background-color: #8B7348; /* Ini warna cokelat yang Anda minta */
+  background-color: #8B7348; 
   
-  /* PENTING: Tambahkan ini agar teks Anda tetap putih/terang */
   color: #f8f9fa; 
 }
 
-/* Ini untuk memastikan link di navbar juga terlihat */
 .navbar-light .navbar-nav .nav-link {
   color: rgba(248, 249, 250, 0.8);
 }

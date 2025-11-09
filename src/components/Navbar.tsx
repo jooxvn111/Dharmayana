@@ -8,7 +8,6 @@ export default function NavbarComponent() {
   return (
     <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
       <Container>
-        {/* --- INI CARA BARU --- */}
         <Navbar.Brand as={Link} href="/">
           Dharmayana
         </Navbar.Brand>
@@ -16,7 +15,6 @@ export default function NavbarComponent() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            {/* --- LIHAT PERBEDAANNYA, LEBIH BERSIH --- */}
             <Nav.Link as={Link} href="/">
               Home
             </Nav.Link>
@@ -26,11 +24,9 @@ export default function NavbarComponent() {
             <Nav.Link as={Link} href="/activity">
               Activity
             </Nav.Link>
-            
-            {/* --- Tombol "Contact" juga jadi Link --- */}
-            <Button as={Link} href="/contact" variant="dark">
+            <Nav.Link as={Link} href="/contact">
               Contact
-            </Button>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

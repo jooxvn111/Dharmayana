@@ -8,13 +8,8 @@ import { FaInstagram, FaFacebookF } from 'react-icons/fa';
 export default function Home() {
   return (
     <>
-      {/* =====================================================
-        KOTAK PUTIH 1: WELCOME
-        =====================================================
-      */}
       <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mt-4 mb-4">
         
-        {/* --- Section Welcome (Desain Baru) --- */}
         <Row className="align-items-center mb-5">
           <Col md={6}>
             <h1 className="display-4 fw-bold">Welcome to Dharmayana!</h1>
@@ -37,14 +32,8 @@ export default function Home() {
         </Row>
       </Container>
 
-
-      {/* =====================================================
-        BAGIAN COKELAT: KEGIATAN
-        =====================================================
-      */}
       <Container className="py-5">
         
-        {/* --- Judul Kegiatan --- */}
         <Row className="text-center mb-4">
           <Col>
             <h2 className="fw-bold">Kegiatan Dharmayana</h2>
@@ -52,10 +41,8 @@ export default function Home() {
           </Col>
         </Row>
         
-        {/* --- Row 1: Program Kerja --- */}
         <h4 className="fw-bold mb-3">Program Kerja</h4>
         <Row className="mb-4">
-          {/* Card 1 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/dwp.jpeg" alt="DWP" />
@@ -67,7 +54,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 2 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/dd.jpeg" alt="Darmadhista" />
@@ -79,7 +65,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 3 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/kathina.jpeg" alt="Pindapata" />
@@ -93,9 +78,7 @@ export default function Home() {
           </Col>
         </Row>
 
-        {/* --- Row 2: Program Kerja (TAMBAHAN BARU) --- */}
         <Row className="mb-4">
-          {/* Card 4 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/lk.jpeg" alt="Latihan Kepemimpinan" />
@@ -107,7 +90,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 5 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/ppd.jpeg" alt="Pekan Penghayatan Dhamma" />
@@ -119,7 +101,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 6 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/md.jpeg" alt="Metta Day" />
@@ -132,10 +113,8 @@ export default function Home() {
             </Card>
           </Col>
         </Row>
-        
-        {/* --- Row 3: Program Kerja (TAMBAHAN BARU) --- */}
+
         <Row className="mb-4">
-          {/* Card 7 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/bc.jpeg" alt="Buddhist Camp" />
@@ -147,7 +126,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 8 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/dbf.jpeg" alt="Dharmayana Buddhist Festival" />
@@ -159,7 +137,6 @@ export default function Home() {
               </Card.Body>
             </Card>
           </Col>
-          {/* Card 9 */}
           <Col md={4} className="mb-3">
             <Card className="h-100 shadow-sm border-0">
               <Card.Img variant="top" src="/images/bd1.jpeg" alt="Berita Dharmayana" />
@@ -173,8 +150,6 @@ export default function Home() {
           </Col>
         </Row>
 
-
-        {/* --- Row Kegiatan Sehari-hari (TIDAK DIHAPUS) --- */}
         <h4 className="fw-bold mb-3">Kegiatan Sehari-hari</h4>
         <Row>
           <Col md={4} className="mb-3">
@@ -213,14 +188,8 @@ export default function Home() {
         </Row>
       </Container>
 
-
-      {/* =====================================================
-        KOTAK PUTIH 2: FAQ, SPONSORS, FOOTER
-        =====================================================
-      */}
       <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mb-4">
         
-        {/* --- Section FAQ --- */}
         <div className="mb-5">
           <Row className="text-center mb-4">
             <Col>
@@ -229,7 +198,6 @@ export default function Home() {
             </Col>
           </Row>
           <Row>
-            {/* Kolom Kiri FAQ */}
             <Col md={6}>
               <div className="mb-3">
                 <h6 className="fw-bold">Siapa saja yang dapat bergabung ke dalam Dharmayana?</h6>
@@ -244,7 +212,6 @@ export default function Home() {
                 <p className="text-muted small">Tentu saja ada. Apabila ada yang tertarik seputar majalah, kalian bisa bergabung ke tim Berita Dharmayana.</p>
               </div>
             </Col>
-            {/* Kolom Kanan FAQ */}
             <Col md={6}>
               <div className="mb-3">
                 <h6 className="fw-bold">Apakah menjadi anggota biasa berarti menjadi pengurus/panitia Dharmayana?</h6>
@@ -262,7 +229,6 @@ export default function Home() {
           </Row>
         </div>
 
-        {/* --- Section Sponsors --- */}
         <div className="text-center mb-5">
           <h2 className="fw-bold">Our Sponsors</h2>
           <p className="text-muted">Kami berterima kasih kepada sponsor yang telah mendukung kegiatan Dharmayana.</p>
@@ -287,7 +253,6 @@ export default function Home() {
 
         <hr />
 
-        {/* --- Footer (di dalam kotak putih) --- */}
         <div className="text-center text-muted pt-3">
           <h5 className="fw-bold text-dark">KMB Dharmayana Untar</h5>
           <p className="small">Terima kasih telah mengunjungi Dharmayana. Kami hadir untuk mendukung komunitas yang lebih baik.</p>

@@ -1,7 +1,6 @@
 // src/components/Footer.tsx
 import { Container, Row, Col } from 'react-bootstrap';
 
-// Ini bisa jadi komponen Server (tanpa "use client")
 export default function FooterComponent() {
   return (
     <footer className="bg-light py-4 mt-auto border-top">
@@ -12,8 +11,8 @@ export default function FooterComponent() {
             <p className="text-muted small">
               Deskripsi singkat organisasi.
             </p>
-            {/* Ikon Social Media */}
           </Col>
+          
           <Col>
             <h6>Link</h6>
             <ul className="list-unstyled">

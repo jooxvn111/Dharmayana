@@ -2,7 +2,6 @@
 "use client";
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
-// Kita masih pakai react-icons
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function ContactPage() {
@@ -18,16 +17,12 @@ export default function ContactPage() {
           </p>
         </Col>
       </Row>
-
-      {/* --- Kotak Konten (Background Terang) --- */}
-      {/* Ini adalah div yang membuat kotak putih/terang seperti di desain */}
       <div className="bg-light p-4 p-md-5 rounded text-dark shadow-sm">
         <Row className="align-items-center">
           
-          {/* --- Kolom Kiri: Gambar --- */}
           <Col md={6} className="mb-4 mb-md-0">
             <Image 
-              src="/images/contact.jpeg" // <-- NAMA FILE ANDA
+              src="/images/contact.jpeg" 
               alt="Kontak Dharmayana"
               fluid 
               rounded 
@@ -35,10 +30,8 @@ export default function ContactPage() {
             />
           </Col>
 
-          {/* --- Kolom Kanan: Info --- */}
           <Col md={6} className="ps-md-4">
             
-            {/* Alamat Kami */}
             <h5 className="fw-bold mb-3">Alamat Kami</h5>
             <div className="d-flex mb-4">
               <FaMapMarkerAlt size={30} className="me-3 flex-shrink-0" />
@@ -51,24 +44,20 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Informasi Kontak */}
             <h5 className="fw-bold mb-3">Informasi Kontak</h5>
             <Row>
-              {/* Email */}
               <Col md={12} lg={6} className="mb-3 mb-lg-0">
                 <div className="d-flex">
                   <FaEnvelope size={20} className="me-3 flex-shrink-0" />
                   <div>
                     <strong>Email Kami</strong>
                     <br />
-                    {/* Kita buat jadi link agar bisa diklik */}
                     <a href="mailto:dharmayana_untar@yahoo.com" className="text-dark text-decoration-none">
                       dharmayana_untar@yahoo.com
                     </a>
                   </div>
                 </div>
               </Col>
-              {/* Telepon */}
               <Col md={12} lg={6}>
                 <div className="d-flex">
                   <FaPhone size={20} className="me-3 flex-shrink-0" />
