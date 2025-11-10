@@ -24,7 +24,7 @@ export default function AboutPage() {
             <p className="text-muted">
               Dharmayana Universitas Tarumanagara adalah sebuah wadah organisasi yang
               bersifat kekeluargaan dan keagamaan bagi seluruh umat Buddha
-              di Universitas Tarumanagara... (lanjutkan deskripsi dari desain).
+              di Universitas Tarumanagara.
             </p>
             <ul className="list-unstyled text-muted">
               <li><FaLeaf className="me-2" /> Dharma – Kebenaran atau ajaran</li>
@@ -83,28 +83,28 @@ export default function AboutPage() {
               <FaBook size={30} className="me-3 flex-shrink-0" />
               <div>
                 <h5 className="fw-bold">Pemahaman dan Pengamalan Buddha Dharma</h5>
-                <p className="text-muted">Deskripsi singkat misi...</p>
+                <p className="text-muted">Membina pemahaman, penghayatan dan pengamalan Buddha Dharma bagi seluruh anggota Dharmayana di Universitas Tarumanagara.</p>
               </div>
             </Col>
             <Col md={6} className="mb-3 d-flex">
               <FaUsers size={30} className="me-3 flex-shrink-0" />
               <div>
                 <h5 className="fw-bold">Hubungan Persaudaraan yang Harmonis</h5>
-                <p className="text-muted">Deskripsi singkat misi...</p>
+                <p className="text-muted">Membina hubungan persaudaraan yang harmonis antara segenap unsur sivitas akademika yang beragama Buddha melalui kegiatan-kegiatan keagamaan.</p>
               </div>
             </Col>
             <Col md={6} className="mb-3 d-flex">
               <FaHandHoldingHeart size={30} className="me-3 flex-shrink-0" />
               <div>
                 <h5 className="fw-bold">Hubungan dan Kerja Sama Berdasarkan Cinta Kasih</h5>
-                <p className="text-muted">Deskripsi singkat misi...</p>
+                <p className="text-muted">Mengadakan hubungan dan kerja sama berdasarkan cinta kasih dengan seluruh unsur sivitas akademika Universitas Tarumanagara.</p>
               </div>
             </Col>
             <Col md={6} className="mb-3 d-flex">
               <FaHandsHelping size={30} className="me-3 flex-shrink-0" />
               <div>
                 <h5 className="fw-bold">Kegiatan Sosial Keagamaan</h5>
-                <p className="text-muted">Deskripsi singkat misi...</p>
+                <p className="text-muted">Melaksanakan kegiatan-kegiatan sosial keagamaan lainnya.</p>
               </div>
             </Col>
           </Row>
@@ -124,7 +124,7 @@ export default function AboutPage() {
         <Row className="text-center mt-4 justify-content-center">
           <Col md={2} xs={6} className="mb-4">
             <Image 
-              src="public\images\tan.png" 
+              src=" \images\tan.png" 
               width={150}
               height={150}
               alt="Juvinto" 
@@ -136,7 +136,7 @@ export default function AboutPage() {
 
           <Col md={2} xs={6} className="mb-4">
             <Image 
-              src="public\images\melin.png" 
+              src=" \images\melin.png" 
               width={150}
               height={150}
               alt="metta" 
@@ -149,7 +149,7 @@ export default function AboutPage() {
           
           <Col md={2} xs={6} className="mb-4">
             <Image 
-              src="public\images\melin.png" 
+              src=" \images\melin.png" 
               width={150}
               height={150}
               alt="fio" 
@@ -161,7 +161,7 @@ export default function AboutPage() {
 
           <Col md={2} xs={6} className="mb-4">
             <Image 
-              src="public\images\ber.png" 
+              src=" \images\ber.png" 
               width={150}
               height={150}
               alt="edric" 
