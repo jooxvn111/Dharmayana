@@ -234,19 +234,19 @@ export default function Home() {
           <p className="text-muted">Kami berterima kasih kepada sponsor yang telah mendukung kegiatan Dharmayana.</p>
           <Row className="align-items-center justify-content-center g-4">
             <Col xs={6} md="auto">
-              <Image src="/images/sponsor/kmb.png" alt="Sponsor 1" style={{ height: '50px' }} />
+              <Image src="/images/cdm.png" alt="Sponsor 1" style={{ height: '50px' }} />
             </Col>
             <Col xs={6} md="auto">
-              <Image src="/images/sponsor/omef.png" alt="Sponsor 2" style={{ height: '50px' }} />
+              <Image src="/images/mef.png" alt="Sponsor 2" style={{ height: '50px' }} />
             </Col>
             <Col xs={6} md="auto">
-              <Image src="/images/sponsor/daxtone.png" alt="Sponsor 3" style={{ height: '70px' }} />
+              <Image src="/images/dextone.png" alt="Sponsor 3" style={{ height: '70px' }} />
             </Col>
             <Col xs={6} md="auto">
-              <Image src="/images/sponsor/lasegar.png" alt="Sponsor 4" style={{ height: '50px' }} />
+              <Image src="/images/sinde.png" alt="Sponsor 4" style={{ height: '50px' }} />
             </Col>
             <Col xs={6} md="auto">
-              <Image src="/images/sponsor/patria.png" alt="Sponsor 5" style={{ height: '50px' }} />
+              <Image src="/images/sponsor6.jpeg" alt="Sponsor 5" style={{ height: '50px' }} />
             </Col>
           </Row>
         </div>
