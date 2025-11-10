@@ -1,9 +1,19 @@
 // src/app/activity/page.tsx
 "use client";
 
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+// 1. IMPORT useState dan Modal
+import { useState } from 'react';
+import { Container, Row, Col, Image, Button, Modal } from 'react-bootstrap';
 
 export default function ActivityPage() {
+  
+  // 2. BUAT STATE UNTUK MENGONTROL MODAL
+  // Nilainya bisa null (tutup), 'dwp', 'kathina', atau 'dd'
+  const [showModal, setShowModal] = useState(null);
+
+  // Fungsi untuk menutup modal
+  const handleClose = () => setShowModal(null);
+
   return (
     <Container className="py-5">
       <Row className="justify-content-center text-center mb-5">
@@ -15,6 +25,7 @@ export default function ActivityPage() {
         </Col>
       </Row>
 
+      {/* --- Kegiatan 1: DWP --- */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
         <Col md={6}>
           <Image 
@@ -28,12 +39,16 @@ export default function ActivityPage() {
         <Col md={6}>
           <h2 className="fw-bold">Dharmayana Welcoming Party</h2>
           <p>
-            Dharmayana Welcoming Party adalah program kerja yang diadakan setiap awal periode. Tujuan dari diadakannya Program Kerja ini adalah untuk menarik mahasiswa baru yang beragama buddhist dengan mengenalkan mereka KMB Dharmayana dalam lingkungan kampus dan berbagai proker juga kepengurusan yang ada  
+            Dharmayana Welcoming Party adalah program kerja yang diadakan setiap awal periode...
           </p>
-          <Button variant="dark">Lihat Galeri</Button>
+          {/* 3. TAMBAHKAN onClick UNTUK MEMBUKA MODAL 'dwp' */}
+          <Button variant="dark" onClick={() => setShowModal('dwp')}>
+            Lihat Galeri
+          </Button>
         </Col>
       </Row>
       
+      {/* --- Kegiatan 2: Kathina --- */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
         <Col md={6} className="order-md-2"> 
           <Image 
@@ -47,13 +62,16 @@ export default function ActivityPage() {
         <Col md={6} className="order-md-1"> 
           <h2 className="fw-bold">Pindapata dan Sangha Dana</h2>
           <p>
-            Kathina adalah Program Kerja Dharmayana yang dilaksanakan untuk memperingati salah satu hari besar agama Buddhist yaitu Hari Kathina. 
-            Hari Kathina merupakan hari dimana para bhikkhu menerima kain baru dari umat Buddha setelah menyelesaikan masa Vassa (retret musim hujan) selama tiga bulan.  
+            Kathina adalah Program Kerja Dharmayana yang dilaksanakan untuk memperingati...
           </p>
-          <Button variant="dark">Lihat Galeri</Button>
+          {/* 3. TAMBAHKAN onClick UNTUK MEMBUKA MODAL 'kathina' */}
+          <Button variant="dark" onClick={() => setShowModal('kathina')}>
+            Lihat Galeri
+          </Button>
         </Col>
       </Row>
       
+      {/* --- Kegiatan 3: Darmadhista --- */}
       <Row className="align-items-center mb-4 bg-light p-4 rounded text-dark">
         <Col md={6}>
           <Image 
@@ -67,13 +85,90 @@ export default function ActivityPage() {
         <Col md={6}>
           <h2 className="fw-bold">Darmadhista</h2>
           <p>
-            Darmadhista adalah program kerja Dharmayana yang diadakan setiap tahunnya sebagai ajang kompetisi seni dan budaya buddhis antar mahasiswa buddhis di Indonesia. 
-            Acara ini bertujuan untuk mempererat tali persaudaraan antar mahasiswa buddhis serta melestarikan seni dan budaya buddhis di kalangan generasi muda.
-            Biasanya acara ini diadakan selama dua hari dengan berbagai rangkaian kegiatan seperti games, pelatihan sila dan kompetisi antar kelompok.
+            Darmadhista adalah program kerja Dharmayana yang diadakan setiap tahunnya...
           </p>
-          <Button variant="dark">Lihat Galeri</Button>
+          {/* 3. TAMBAHKAN onClick UNTUK MEMBUKA MODAL 'dd' */}
+          <Button variant="dark" onClick={() => setShowModal('dd')}>
+            Lihat Galeri
+          </Button>
         </Col>
       </Row>
+
+      {/* ====================================================== */}
+      {/* 4. DEFINISI SEMUA MODAL GALERI                         */}
+      {/* ====================================================== */}
+
+      {/* --- Modal Galeri DWP --- */}
+      <Modal show={showModal === 'dwp'} onHide={handleClose} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Galeri: Dharmayana Welcoming Party</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Row>
+              {/* === NAMA FILE SUDAH DIPERBAIKI === */}
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dwp/baby.jpg" alt="Galeri DWP 1" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dwp/image.png" alt="Galeri DWP 2" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dwp/rokok.jpg" alt="Galeri DWP 3" fluid rounded />
+              </Col>
+              {/* Tambahkan <Col> lainnya jika Anda menambah foto baru... */}
+            </Row>
+          </Container>
+        </Modal.Body>
+      </Modal>
+
+      {/* --- Modal Galeri Kathina --- */}
+      <Modal show={showModal === 'kathina'} onHide={handleClose} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Galeri: Pindapata dan Sangha Dana</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Row>
+              {/* === NAMA FILE SUDAH DIPERBAIKI === */}
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-kathina/kucing.jpg" alt="Galeri Kathina 1" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-kathina/oo.jpg" alt="Galeri Kathina 2" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-kathina/sad.jpg" alt="Galeri Kathina 3" fluid rounded />
+              </Col>
+              {/* Tambahkan <Col> lainnya... */}
+            </Row>
+          </Container>
+        </Modal.Body>
+      </Modal>
+
+      {/* --- Modal Galeri Darmadhista --- */}
+      <Modal show={showModal === 'dd'} onHide={handleClose} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Galeri: Darmadhista</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Row>
+              {/* === NAMA FILE SUDAH DIPERBAIKI === */}
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dd/burung.jpg" alt="Galeri DD 1" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dd/bwa.jpg" alt="Galeri DD 2" fluid rounded />
+              </Col>
+              <Col xs={6} md={4} className="mb-3">
+                <Image src="/images/gallery-dd/cachedImage.png" alt="Galeri DD 3" fluid rounded />
+              </Col>
+              {/* Tambahkan <Col> lainnya... */}
+            </Row>
+          </Container>
+        </Modal.Body>
+      </Modal>
 
     </Container>
   );
