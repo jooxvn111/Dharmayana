@@ -1,33 +1,46 @@
 // src/components/Navbar.tsx
-"use client"; 
+"use client";
 
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import Link from 'next/link';
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import Link from "next/link";
 
 export default function NavbarComponent() {
   return (
     <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
       <Container>
-        <Navbar.Brand as={Link} href="/">
-          Dharmayana
+        <Navbar.Brand>
+          <Link href="/" className="navbar-brand">
+            Dharmayana
+          </Link>
         </Navbar.Brand>
-        
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav>
-            <Nav.Link as={Link} href="/">
+          <Nav className="me-3">
+
+            <Link href="/" className="nav-link">
               Home
-            </Nav.Link>
-            <Nav.Link as={Link} href="/about">
+            </Link>
+
+            <Link href="/about" className="nav-link">
               About
-            </Nav.Link>
-            <Nav.Link as={Link} href="/activity">
+            </Link>
+
+            <Link href="/activity" className="nav-link">
               Activity
-            </Nav.Link>
-            <Nav.Link as={Link} href="/contact">
+            </Link>
+
+            <Link href="/contact" className="nav-link">
               Contact
-            </Nav.Link>
+            </Link>
+
           </Nav>
+
+          <Link href="/login">
+            <Button variant="primary">Login</Button>
+          </Link>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

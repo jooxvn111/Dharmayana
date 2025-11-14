@@ -1,19 +1,18 @@
-// src/app/layout.tsx
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './custom.css'; 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./custom.css";
+import "./globals.css";
 
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
-import NavbarComponent from '../components/Navbar';
-import FooterComponent from '../components/Footer';
+import LayoutContent from "./layoutContent"; // client component
+import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Dharmayana',
-  description: 'Website untuk Dharmayana',
+  title: "Dharmayana",
+  description: "Website untuk Dharmayana",
 };
 
 export default function RootLayout({
@@ -24,12 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavbarComponent />
         
-        <main>
-          {children}
-        </main>
+        {/* Toaster supaya semua halaman bisa tampil notifikasi */}
+        <Toaster position="top-right" />
         
+        {/* Layout utama */}
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );
