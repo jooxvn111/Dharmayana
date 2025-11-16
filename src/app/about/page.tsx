@@ -1,21 +1,33 @@
-// src/app/about/page.tsx
 "use client";
 
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import { FaHeart, FaUsers, FaBook, FaHandHoldingHeart, FaLeaf, FaHandsHelping, FaUniversity } from 'react-icons/fa';
+import { useEffect, useState } from "react";
+import { Container, Row, Col, Image } from "react-bootstrap";
+import {
+  FaHeart, FaUsers, FaBook, FaHandHoldingHeart,
+  FaLeaf, FaHandsHelping, FaUniversity
+} from "react-icons/fa";
 
 export default function AboutPage() {
+  const [team, setTeam] = useState([]);
+
+  // Load BPH dari API
+  useEffect(() => {
+    fetch("/api/bph")
+      .then((res) => res.json())
+      .then((data) => setTeam(data));
+  }, []);
+
   return (
     <>
       <Container className="py-5">
         <Row className="align-items-center">
           <Col md={5} className="text-center">
-            <Image 
-              src="/images/bd71.jpeg" 
+            <Image
+              src="/images/bd71.jpeg"
               width={400}
               height={500}
-              style={{ width: '80%', height: 'auto' }}
-              alt="What you think" 
+              style={{ width: "80%", height: "auto" }}
+              alt="What you think"
               className="rounded shadow"
             />
           </Col>
@@ -34,6 +46,7 @@ export default function AboutPage() {
         </Row>
       </Container>
 
+      {/* VISION */}
       <Container className="py-5">
         <Row className="justify-content-center text-center">
           <Col md={8}>
@@ -68,6 +81,7 @@ export default function AboutPage() {
         </Row>
       </Container>
 
+      {/* MISSION */}
       <Container fluid className="py-5 bg-light">
         <Container>
           <Row className="justify-content-center text-center">
@@ -111,6 +125,7 @@ export default function AboutPage() {
         </Container>
       </Container>
 
+      {/* OUR TEAM (Dinamis dari MongoDB) */}
       <Container className="py-5">
         <Row className="justify-content-center text-center">
           <Col md={8}>
@@ -122,55 +137,23 @@ export default function AboutPage() {
         </Row>
 
         <Row className="text-center mt-4 justify-content-center">
-          <Col md={2} xs={6} className="mb-4">
-            <Image 
-              src=" \images\tan.png" 
-              width={150}
-              height={150}
-              alt="Juvinto" 
-              className="rounded-circle shadow-sm mb-2"
-            />
-            <h6 className="fw-bold mb-0">Tannia</h6>
-            <p className="text-muted small">Ketua Umum</p>
-          </Col>
-
-          <Col md={2} xs={6} className="mb-4">
-            <Image 
-              src=" \images\melin.png" 
-              width={150}
-              height={150}
-              alt="metta" 
-              className="rounded-circle shadow-sm mb-2"
-            />
-            <h6 className="fw-bold mb-0">Metta Anastasya</h6>
-            <p className="text-muted small">Wakil Ketua Umum Dharmayana</p>
-          </Col>
-          
-          
-          <Col md={2} xs={6} className="mb-4">
-            <Image 
-              src=" \images\melin.png" 
-              width={150}
-              height={150}
-              alt="fio" 
-              className="rounded-circle shadow-sm mb-2"
-            />
-            <h6 className="fw-bold mb-0">Fiorentine Ong</h6>
-            <p className="text-muted small">Bendahara umum Dharmayana</p>
-          </Col>
-
-          <Col md={2} xs={6} className="mb-4">
-            <Image 
-              src=" \images\ber.png" 
-              width={150}
-              height={150}
-              alt="edric" 
-              className="rounded-circle shadow-sm mb-2"
-            />
-            <h6 className="fw-bold mb-0">Edric Charly</h6>
-            <p className="text-muted small">Sekretaris umum Dharmayana</p>
-          </Col>
-          
+          {team.length === 0 ? (
+            <p className="text-muted">Tidak ada data BPH.</p>
+          ) : (
+            team.map((item: any) => (
+              <Col md={2} xs={6} className="mb-4" key={item._id}>
+                <Image
+                  src={item.image || "/images/default.png"}
+                  width={150}
+                  height={150}
+                  alt={item.name}
+                  className="rounded-circle shadow-sm mb-2"
+                />
+                <h6 className="fw-bold mb-0">{item.name}</h6>
+                <p className="text-muted small">{item.posisi}</p>
+              </Col>
+            ))
+          )}
         </Row>
       </Container>
     </>
