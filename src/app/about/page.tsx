@@ -143,13 +143,13 @@ export default function AboutPage() {
             team.map((item: any) => (
               <Col md={2} xs={6} className="mb-4" key={item._id}>
                 <Image
-                  src={item.image || "/images/default.png"}
+                  src={item.gambar || "/images/default.png"}
                   width={150}
                   height={150}
-                  alt={item.name}
+                  alt={item.nama}
                   className="rounded-circle shadow-sm mb-2"
                 />
-                <h6 className="fw-bold mb-0">{item.name}</h6>
+                <h6 className="fw-bold mb-0">{item.nama}</h6>
                 <p className="text-muted small">{item.posisi}</p>
               </Col>
             ))

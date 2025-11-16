@@ -11,10 +11,12 @@ export async function GET() {
 export async function POST(req: Request) {
   await dbConnect();
   const body = await req.json();
+
   const created = await Bph.create({
     nama: body.nama,
     posisi: body.posisi,
     gambar: body.gambar,
   });
+
   return NextResponse.json(created);
 }

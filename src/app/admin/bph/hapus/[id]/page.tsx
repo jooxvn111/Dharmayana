@@ -1,71 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function AddBPH() {
+export default function HapusBPH({ params }: any) {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [posisi, setPosisi] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+  const { id } = params;
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    let image = "";
-
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const uploadData = await uploadRes.json();
-      image = uploadData.url;
+  useEffect(() => {
+    async function doDelete() {
+      await fetch(`/api/bph/${id}`, { method: "DELETE" });
+      router.push("/admin/bph");
     }
+    doDelete();
+  }, [id, router]);
 
-    await fetch("/api/bph", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        name, 
-        posisi, 
-        image 
-      }),
-    });
-
-    router.push("/admin/bph");
-  };
-
-  return (
-    <div className="container mt-4">
-      <h2>Tambah BPH</h2>
-
-      <form onSubmit={handleSubmit} className="mt-3">
-        <label>Nama</label>
-        <input
-          className="form-control"
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <label className="mt-2">Posisi</label>
-        <input
-          className="form-control"
-          onChange={(e) => setPosisi(e.target.value)}
-        />
-
-        <label className="mt-2">Foto</label>
-        <input
-          type="file"
-          className="form-control"
-          onChange={(e: any) => setFile(e.target.files[0])}
-        />
-
-        <button className="btn btn-primary mt-3">Simpan</button>
-      </form>
-    </div>
-  );
+  return <p>Menghapus...</p>;
 }
