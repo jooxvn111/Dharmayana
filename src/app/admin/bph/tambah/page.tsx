@@ -20,7 +20,7 @@ export default function AddBPH() {
 
       const uploadRes = await fetch("/api/upload", {
         method: "POST",
-        body: formData,
+        body: formData
       });
 
       const data = await uploadRes.json();
