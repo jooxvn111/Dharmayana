@@ -11,6 +11,7 @@ export default function AdminProgramHome() {
 
       <div className="row g-3">
 
+        {/* Tambah Program */}
         <div className="col-md-4">
           <div className="card shadow-sm">
             <div className="card-body">
@@ -25,6 +26,7 @@ export default function AdminProgramHome() {
           </div>
         </div>
 
+        {/* Lihat Program */}
         <div className="col-md-4">
           <div className="card shadow-sm">
             <div className="card-body">
@@ -39,6 +41,7 @@ export default function AdminProgramHome() {
           </div>
         </div>
 
+        {/* Pengaturan */}
         <div className="col-md-4">
           <div className="card shadow-sm">
             <div className="card-body">
@@ -49,6 +52,21 @@ export default function AdminProgramHome() {
               <button className="btn btn-outline-secondary w-100">
                 Pengaturan
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* CARD BARU: BPH & BPH Inti */}
+        <div className="col-md-4">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">Kelola BPH & BPH Inti</h5>
+              <p className="card-text text-muted">
+                Edit struktur kepengurusan BPH dan BPH Inti.
+              </p>
+              <a href="/admin/bph" className="btn btn-outline-primary w-100">
+                Kelola Pengurus
+              </a>
             </div>
           </div>
         </div>

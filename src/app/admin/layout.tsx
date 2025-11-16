@@ -37,6 +37,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Link>
           </li>
 
+          {/* ➕ MENU BARU: DATA BPH */}
+          <li style={{ marginBottom: "12px" }}>
+            <Link href="/admin/bph" style={{ color: "white", textDecoration: "none" }}>
+              Data BPH
+            </Link>
+          </li>
+
           <li style={{ marginBottom: "12px" }}>
             <Link href="/admin/galeri" style={{ color: "white", textDecoration: "none" }}>
               Galeri
