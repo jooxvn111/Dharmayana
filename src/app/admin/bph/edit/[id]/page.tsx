@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 export default function EditBPH({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
 
-  // Next.js 16: params adalah Promise → wajib di-unwrap pakai use()
   const { id } = use(params);
 
   const [nama, setNama] = useState("");
@@ -23,7 +22,7 @@ export default function EditBPH({ params }: { params: Promise<{ id: string }> })
         }
 
         const text = await res.text();
-        if (!text) return {}; // <- FIX: cegah "Unexpected end of JSON input"
+        if (!text) return {}; 
 
         return JSON.parse(text);
       })
