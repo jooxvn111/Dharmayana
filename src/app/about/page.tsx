@@ -10,7 +10,6 @@ import {
 export default function AboutPage() {
   const [team, setTeam] = useState([]);
 
-  // Load BPH dari API
   useEffect(() => {
     fetch("/api/bph")
       .then((res) => res.json())
@@ -46,7 +45,6 @@ export default function AboutPage() {
         </Row>
       </Container>
 
-      {/* VISION */}
       <Container className="py-5">
         <Row className="justify-content-center text-center">
           <Col md={8}>
@@ -81,7 +79,6 @@ export default function AboutPage() {
         </Row>
       </Container>
 
-      {/* MISSION */}
       <Container fluid className="py-5 bg-light">
         <Container>
           <Row className="justify-content-center text-center">
@@ -125,7 +122,6 @@ export default function AboutPage() {
         </Container>
       </Container>
 
-      {/* OUR TEAM (Dinamis dari MongoDB) */}
       <Container className="py-5">
         <Row className="justify-content-center text-center">
           <Col md={8}>
