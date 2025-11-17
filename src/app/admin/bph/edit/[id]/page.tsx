@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function EditBPH({ params }: any) {
+export default function EditBPH({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const { id } = params;
+
+  // Next.js 16: params adalah Promise → wajib di-unwrap pakai use()
+  const { id } = use(params);
 
   const [nama, setNama] = useState("");
   const [posisi, setPosisi] = useState("");
@@ -14,11 +16,21 @@ export default function EditBPH({ params }: any) {
 
   useEffect(() => {
     fetch(`/api/bph/${id}`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          console.error("Fetch error:", await res.text());
+          return {};
+        }
+
+        const text = await res.text();
+        if (!text) return {}; // <- FIX: cegah "Unexpected end of JSON input"
+
+        return JSON.parse(text);
+      })
       .then((data) => {
-        setNama(data.nama);
-        setPosisi(data.posisi);
-        setGambar(data.gambar);
+        setNama(data.nama || "");
+        setPosisi(data.posisi || "");
+        setGambar(data.gambar || "");
       });
   }, [id]);
 
@@ -27,7 +39,6 @@ export default function EditBPH({ params }: any) {
 
     let finalGambar = gambar;
 
-    // Jika user upload file baru → upload file baru
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -41,7 +52,6 @@ export default function EditBPH({ params }: any) {
       finalGambar = uploadData.url;
     }
 
-    // UPDATE DATA KE DATABASE
     await fetch(`/api/bph/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -52,7 +62,6 @@ export default function EditBPH({ params }: any) {
       }),
     });
 
-    // redirect
     router.push("/admin/bph");
   };
 
@@ -76,7 +85,6 @@ export default function EditBPH({ params }: any) {
         />
 
         <label className="mt-2">Gambar Sekarang</label>
-        <br />
         {gambar && <img src={gambar} width={120} className="rounded mb-2" />}
 
         <label>Ganti Gambar</label>

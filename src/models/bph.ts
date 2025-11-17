@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const BphSchema = new Schema(
   {
@@ -9,5 +9,4 @@ const BphSchema = new Schema(
   { timestamps: true }
 );
 
-const Bph = models.Bph || model("Bph", BphSchema);
-export default Bph;
+export default mongoose.models.Bph || mongoose.model("Bph", BphSchema);
