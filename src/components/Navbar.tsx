@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 "use client";
 
 import { Navbar, Nav, Container, Button } from "react-bootstrap";

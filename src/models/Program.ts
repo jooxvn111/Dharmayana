@@ -4,7 +4,7 @@ const ProgramSchema = new Schema(
   {
     nama: String,
     deskripsi: String,
-    gambar: String, // tambah ini
+    gambar: String, 
   },
   { timestamps: true }
 );

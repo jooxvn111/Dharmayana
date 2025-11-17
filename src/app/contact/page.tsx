@@ -1,4 +1,3 @@
-// src/app/contact/page.tsx
 "use client";
 
 import { Container, Row, Col, Image } from 'react-bootstrap';
@@ -8,7 +7,6 @@ export default function ContactPage() {
   return (
     <Container className="py-5">
       
-      {/* --- Header --- */}
       <Row className="justify-content-center text-center mb-4">
         <Col md={8}>
           <h1 className="display-4 fw-bold">Contact Us</h1>

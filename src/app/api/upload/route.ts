@@ -15,7 +15,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validasi: hanya image
     if (!file.type.startsWith("image/")) {
       return NextResponse.json(
         { error: "File harus berupa gambar (jpg/png/svg/webp)" },
@@ -23,33 +22,27 @@ export async function POST(req: Request) {
       );
     }
 
-    // Pastikan folder uploads ada
     const uploadDir = path.join(process.cwd(), "public/uploads");
 
     if (!fs.existsSync(uploadDir)) {
       await mkdir(uploadDir, { recursive: true });
     }
 
-    // Nama file unik
     const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
 
-    // Full path penyimpanan
     const filePath = path.join(uploadDir, fileName);
 
-    // Convert File → Buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Simpan file
     await writeFile(filePath, buffer);
 
-    // URL untuk disimpan di database
     const fileUrl = `/uploads/${fileName}`;
 
     return NextResponse.json({
       success: true,
       message: "Upload berhasil",
-      url: fileUrl,       // URL ini yang nanti kamu simpan ke MongoDB
+      url: fileUrl,
       fileName,
     });
 

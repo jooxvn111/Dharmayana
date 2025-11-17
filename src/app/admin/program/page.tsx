@@ -16,7 +16,6 @@ export default function ProgramPage() {
   const [program, setProgram] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // LOAD DATA
   const loadProgram = async () => {
     try {
       setLoading(true);
@@ -34,7 +33,6 @@ export default function ProgramPage() {
     loadProgram();
   }, []);
 
-  // DELETE HANDLER
   const handleDelete = async (id: string) => {
     const confirmDelete = confirm("Yakin ingin menghapus program ini?");
     if (!confirmDelete) return;
@@ -49,7 +47,7 @@ export default function ProgramPage() {
     }
 
     toast.success("Program berhasil dihapus!");
-    loadProgram(); // Refresh data
+    loadProgram(); 
   };
 
   return (
@@ -59,7 +57,6 @@ export default function ProgramPage() {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Program Kerja</h2>
 
-        {/* 🔥 Tombol tambah */}
         <button
           className="btn btn-primary"
           onClick={() => router.push("/admin/program/tambah")}
@@ -91,7 +88,6 @@ export default function ProgramPage() {
                 <td>{item.deskripsi}</td>
                 <td className="d-flex gap-2">
 
-                  {/* 🔥 TOMBOL EDIT */}
                   <button
                     className="btn btn-warning btn-sm"
                     onClick={() => router.push(`/admin/program/edit/${item._id}`)}
@@ -99,7 +95,6 @@ export default function ProgramPage() {
                     Edit
                   </button>
 
-                  {/* 🔥 TOMBOL HAPUS */}
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(item._id)}

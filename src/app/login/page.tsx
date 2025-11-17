@@ -31,11 +31,10 @@ export default function LoginPage() {
       className="d-flex justify-content-center align-items-center"
       style={{
         minHeight: "100vh",
-        background: "#A78956", // warna sama dengan tema utama
+        background: "#A78956",
         padding: "20px",
       }}
     >
-      {/* CARD PUTIH */}
       <div
         className="shadow"
         style={{
@@ -52,7 +51,6 @@ export default function LoginPage() {
         </p>
 
         <form onSubmit={handleSubmit}>
-          {/* Username */}
           <div className="mb-3">
             <label className="form-label fw-semibold">Username</label>
             <input
@@ -65,7 +63,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password */}
           <div className="mb-3">
             <label className="form-label fw-semibold">Password</label>
             <input
@@ -78,7 +75,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             className="btn btn-primary w-100"

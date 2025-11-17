@@ -5,7 +5,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import LayoutContent from "./layoutContent"; // client component
+import LayoutContent from "./layoutContent";
 import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -24,10 +24,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         
-        {/* Toaster supaya semua halaman bisa tampil notifikasi */}
         <Toaster position="top-right" />
         
-        {/* Layout utama */}
         <LayoutContent>{children}</LayoutContent>
       </body>
     </html>

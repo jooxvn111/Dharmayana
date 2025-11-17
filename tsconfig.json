@@ -18,9 +18,9 @@
       { "name": "next" }
     ],
 
-    "baseUrl": ".",                // 🆕 DITAMBAHKAN
+    "baseUrl": ".",                
     "paths": {
-      "@/*": ["src/*"]             // sudah benar dan aku rapikan
+      "@/*": ["src/*"]             
     }
   },
 

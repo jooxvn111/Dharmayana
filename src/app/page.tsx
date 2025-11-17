@@ -12,7 +12,6 @@ export default function Home() {
       const res = await fetch("/api/program");
       const data = await res.json();
 
-      // pastikan datanya array
       if (Array.isArray(data)) {
         setProgram(data);
       } else {
@@ -31,7 +30,6 @@ export default function Home() {
 
   return (
     <>
-      {/* === HERO SECTION === */}
       <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mt-4 mb-4">
         <Row className="align-items-center mb-5">
           <Col md={6}>
@@ -54,7 +52,6 @@ export default function Home() {
         </Row>
       </Container>
 
-      {/* === PROGRAM KERJA DINAMIS === */}
       <Container className="py-5">
         <Row className="text-center mb-4">
           <Col>
@@ -90,9 +87,7 @@ export default function Home() {
         </Row>
       </Container>
 
-      {/* === SECTION LAIN (FAQ + SPONSOR + FOOTER) === */}
       <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mb-4">
-        {/* ... isi FAQ & sponsor kamu ... */}
 
         <hr />
 

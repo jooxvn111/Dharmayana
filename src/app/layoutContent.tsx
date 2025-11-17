@@ -11,7 +11,6 @@ export default function LayoutContent({
 }) {
   const pathname = usePathname();
 
-  // hide navbar/footer di admin
   const hideLayout = pathname.startsWith("/admin");
 
   return (
