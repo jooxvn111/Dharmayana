@@ -13,7 +13,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="d-flex" style={{ minHeight: "100vh" }}>
-      {/* SIDEBAR */}
       <div
         style={{
           width: "240px",
@@ -37,7 +36,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Link>
           </li>
 
-          {/* ➕ MENU BARU: DATA BPH */}
           <li style={{ marginBottom: "12px" }}>
             <Link href="/admin/bph" style={{ color: "white", textDecoration: "none" }}>
               Data BPH
@@ -63,8 +61,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </li>
         </ul>
       </div>
-
-      {/* HALAMAN KONTEN */}
       <div className="flex-grow-1 p-4">{children}</div>
     </div>
   );
