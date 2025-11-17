@@ -61,7 +61,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </li>
         </ul>
       </div>
-
       <div className="flex-grow-1 p-4">{children}</div>
     </div>
   );

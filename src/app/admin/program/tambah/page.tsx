@@ -62,7 +62,6 @@ export default function ProgramTambahPage() {
       <div className="card shadow-sm p-4">
         <form onSubmit={handleSubmit} className="row g-3">
 
-          {/* Nama Program */}
           <div className="col-md-12">
             <label className="form-label fw-bold">Nama Program</label>
             <input
@@ -74,7 +73,6 @@ export default function ProgramTambahPage() {
             />
           </div>
 
-          {/* Deskripsi */}
           <div className="col-md-12">
             <label className="form-label fw-bold">Deskripsi Program</label>
             <textarea
@@ -87,7 +85,6 @@ export default function ProgramTambahPage() {
             ></textarea>
           </div>
 
-          {/* Upload Gambar */}
           <div className="col-md-12">
             <label className="form-label fw-bold">Gambar Program</label>
             <input type="file" className="form-control" accept="image/*" onChange={handleImage} />
@@ -108,7 +105,6 @@ export default function ProgramTambahPage() {
             )}
           </div>
 
-          {/* Button Submit */}
           <div className="col-md-12">
             <button className="btn btn-primary px-4 py-2">
               Simpan Program
