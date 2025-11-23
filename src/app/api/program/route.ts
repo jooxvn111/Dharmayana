@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/dbConnect"; // PERBAIKAN 1: Pakai kurung kurawal { }
-import Program from "@/models/Program";      // PERBAIKAN 2: Ganti 'program' jadi 'Program' (P besar)
+import { dbConnect } from "@/lib/dbConnect";
+import Program from "@/models/Program";
 
 export async function GET() {
   try {
     await dbConnect();
-    const programs = await Program.find().sort({ createdAt: -1 });
+    // Urutkan berdasarkan tanggal acara (terdekat duluan), bukan tanggal dibuat
+    const programs = await Program.find().sort({ tanggal: 1 }); 
     return NextResponse.json(programs);
   } catch (err) {
     return NextResponse.json({ error: "Gagal mengambil data" }, { status: 500 });
@@ -17,13 +18,17 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
 
-    // Kita buat object baru agar memastikan field 'galeri' masuk
-    // Walaupun user tidak kirim galeri, defaultnya array kosong []
+    // Validasi sederhana
+    if (!body.nama || !body.tanggal || !body.deskripsi) {
+        return NextResponse.json({ error: "Nama, Tanggal, dan Deskripsi wajib diisi" }, { status: 400 });
+    }
+
     const created = await Program.create({
       nama: body.nama,
+      tanggal: new Date(body.tanggal), // Pastikan format Date
       deskripsi: body.deskripsi,
-      gambar: body.gambar,       // String URL (Thumbnail)
-      galeri: body.galeri || []  // Array of Strings URL (Foto dokumentasi)
+      gambar: body.gambar,       
+      galeri: body.galeri || []  
     });
 
     return NextResponse.json(created, { status: 201 });
