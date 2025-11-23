@@ -1,25 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Image } from "react-bootstrap";
-import { FaInstagram, FaFacebookF } from "react-icons/fa";
+import { Container, Row, Col, Card, Image, Modal, Button } from "react-bootstrap";
+import { FaChevronLeft, FaChevronRight, FaChevronDown } from "react-icons/fa";
+
+// Kita tidak perlu import styles from "./page.module.css" lagi
+// Semua style sudah ada di globals.css
 
 export default function Home() {
   const [program, setProgram] = useState<any[]>([]);
+  
+  // State Modal & Carousel
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState<any>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  // Load Data Program
   async function loadProgram() {
     try {
       const res = await fetch("/api/program");
       const data = await res.json();
-
       if (Array.isArray(data)) {
         setProgram(data);
       } else {
-        console.error("API /api/program tidak mengembalikan array:", data);
         setProgram([]);
       }
     } catch (err) {
-      console.error("Gagal fetch program:", err);
+      console.error(err);
       setProgram([]);
     }
   }
@@ -28,83 +35,193 @@ export default function Home() {
     loadProgram();
   }, []);
 
+  // Handle Klik Kartu
+  const handleCardClick = (item: any) => {
+    setSelectedProgram(item);
+    setActiveImageIndex(0); 
+    setShowModal(true);
+  };
+
+  const handleClose = () => setShowModal(false);
+
+  // Logic Carousel (Thumbnail + Galeri)
+  const imageList = selectedProgram
+    ? [
+        selectedProgram.gambar || "/images/default.jpg", 
+        ...(Array.isArray(selectedProgram.galeri) ? selectedProgram.galeri : [])
+      ].filter(Boolean) 
+    : [];
+
+  const nextImage = () => {
+    setActiveImageIndex((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
+  };
+  const prevImage = () => {
+    setActiveImageIndex((prev) => (prev === 0 ? imageList.length - 1 : prev - 1));
+  };
+
+  const scrollToContent = () => {
+    const contentSection = document.getElementById("content-start");
+    if(contentSection) contentSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mt-4 mb-4">
-        <Row className="align-items-center mb-5">
-          <Col md={6}>
-            <h1 className="display-4 fw-bold">Welcome to Dharmayana!</h1>
-            <p className="lead text-muted">
-              KMB Dharmayana Untar adalah sebuah wadah organisasi keagamaan Buddhis di Universitas Tarumanagara.
-            </p>
-            <Image src="/images/untar.png" alt="Powered by" style={{ height: "40px" }} />
-          </Col>
+      {/* === HERO SECTION (VIDEO) === */}
+      {/* Menggunakan class 'heroVideoSection' dari globals.css */}
+      <div className="heroVideoSection">
+        
+        {/* VIDEO BACKGROUND */}
+        <video 
+          autoPlay loop muted playsInline 
+          className="videoBackground"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-meditating-by-the-river-5219/1080p.mp4" type="video/mp4" />
+        </video>
 
-          <Col md={6} className="mt-4 mt-md-0">
-            <Image
-              src="/images/contact.jpeg"
-              alt="Grup Dharmayana"
-              fluid
-              rounded
-              className="shadow-sm"
-            />
-          </Col>
-        </Row>
-      </Container>
+        {/* OVERLAY GELAP */}
+        <div className="videoOverlay"></div>
 
-      <Container className="py-5">
-        <Row className="text-center mb-4">
+        {/* KONTEN TENGAH */}
+        <Container className="heroContent">
+          <div className="mb-4">
+             <Image 
+                src="/images/untar.png" 
+                alt="Untar Logo" 
+                style={{ height: "80px", filter: "brightness(0) invert(1) drop-shadow(0 0 10px rgba(0,0,0,0.5))" }} 
+             />
+          </div>
+
+          <h1 className="heroTitleVideo">
+            Welcome to Dharmayana
+          </h1>
+          
+          <p className="heroSubtitleVideo">
+            Menjalin persaudaraan, mengembangkan kebijaksanaan, dan berbagi kebahagiaan 
+            dalam naungan Dhamma di Universitas Tarumanagara.
+          </p>
+
+          <button 
+            onClick={scrollToContent}
+            className="btn btn-lg rounded-pill px-5 fw-bold shadow-lg text-white border-0" 
+            style={{backgroundColor: '#E76F51', transition: 'transform 0.3s'}}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            Lihat Kegiatan Kami
+          </button>
+        </Container>
+
+        {/* SCROLL DOWN INDICATOR */}
+        <div className="scrollDown" onClick={scrollToContent}>
+            <span className="small d-block mb-1 fw-bold">Scroll Down</span>
+            <FaChevronDown size={20} />
+        </div>
+      </div>
+
+      {/* === PROGRAM SECTION === */}
+      <div id="content-start"></div> 
+      
+      <Container className="py-5 mt-4 mb-5">
+        <Row className="text-center mb-5">
           <Col>
-            <h2 className="fw-bold">Kegiatan Dharmayana</h2>
-            <p>Program kerja Dharmayana yang diperbarui oleh admin dan tampil otomatis.</p>
+            <h2 className="fw-bold" style={{color: '#8D1D2C', fontFamily: 'Playfair Display, serif'}}>
+                Kegiatan Dharmayana
+            </h2>
+            <div style={{width:'80px', height:'4px', backgroundColor:'#E76F51', margin:'0 auto 20px', borderRadius:'2px'}}></div>
+            <p className="text-muted">Program kerja dan dokumentasi kegiatan terbaru.</p>
           </Col>
         </Row>
 
-        <h4 className="fw-bold mb-3">Program Kerja</h4>
-
-        <Row className="mb-4">
+        <Row>
           {Array.isArray(program) && program.length > 0 ? (
             program.map((item) => (
-              <Col md={4} className="mb-3" key={item._id}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Img
-                    variant="top"
-                    src={item.gambar || "/images/default.jpg"}
-                    alt={item.nama}
-                  />
-                  <Card.Body>
-                    <Card.Title>{item.nama}</Card.Title>
-                    <Card.Text className="small text-muted">
-                      {item.deskripsi}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+              <Col md={4} className="mb-4" key={item._id}>
+                <div onClick={() => handleCardClick(item)} style={{ cursor: 'pointer' }}>
+                  {/* Menggunakan style Card yang mirip dengan Org Tree */}
+                  <Card className="h-100 border-0 shadow-sm rounded-4 overflow-hidden program-card-hover">
+                    <div className="overflow-hidden position-relative" style={{height: '220px'}}>
+                      <Card.Img 
+                        variant="top" 
+                        src={item.gambar || "/images/default.jpg"} 
+                        className="w-100 h-100 object-fit-cover transition-transform"
+                      />
+                      <div className="position-absolute bottom-0 start-0 w-100 p-3" 
+                           style={{background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)'}}>
+                      </div>
+                    </div>
+                    <Card.Body className="p-4">
+                      <Card.Title className="fw-bold mb-2" style={{color: '#8D1D2C', fontFamily:'Playfair Display'}}>
+                        {item.nama}
+                      </Card.Title>
+                      <Card.Text className="small text-muted mb-3" style={{
+                          display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'
+                      }}>
+                        {item.deskripsi}
+                      </Card.Text>
+                      <span className="fw-bold text-warning small text-uppercase letter-spacing-1">
+                        Lihat Detail →
+                      </span>
+                    </Card.Body>
+                  </Card>
+                </div>
               </Col>
             ))
           ) : (
-            <p className="text-muted">Belum ada program kerja ditambahkan.</p>
+            <Col className="text-center py-5">
+              <div className="p-5 bg-white rounded-4 shadow-sm border border-light">
+                <p className="text-muted m-0 fst-italic">Belum ada program kerja ditambahkan.</p>
+              </div>
+            </Col>
           )}
         </Row>
       </Container>
 
-      <Container className="bg-light text-dark p-4 p-md-5 rounded shadow-sm mb-4">
+      {/* === MODAL POPUP === */}
+      <Modal 
+        show={showModal} 
+        onHide={handleClose} 
+        centered 
+        size="lg"
+        contentClassName="custom-modal-content" // Class Global
+      >
+        <Modal.Header closeButton className="border-0">
+          <Modal.Title className="fw-bold fs-3" style={{ color: '#8D1D2C', fontFamily: 'Playfair Display' }}>
+            {selectedProgram?.nama}
+          </Modal.Title>
+        </Modal.Header>
 
-        <hr />
-
-        <div className="text-center text-muted pt-3">
-          <h5 className="fw-bold text-dark">KMB Dharmayana Untar</h5>
-          <p className="small">© 2024 Dharmayana. All rights reserved.</p>
-
-          <div className="mb-3">
-            <a href="#!" className="text-dark me-3">
-              <FaInstagram size={20} />
-            </a>
-            <a href="#!" className="text-dark">
-              <FaFacebookF size={20} />
-            </a>
-          </div>
-        </div>
-      </Container>
+        <Modal.Body className="pt-0">
+            <div className="carousel-container-fixed"> 
+                <Image 
+                    src={imageList[activeImageIndex]} 
+                    className="carousel-image-fixed" 
+                    alt="Program Slide"
+                    width={800} 
+                    height={400}
+                />
+                {imageList.length > 1 && (
+                    <>
+                        <button className="carousel-btn prev-btn" onClick={prevImage}><FaChevronLeft /></button>
+                        <button className="carousel-btn next-btn" onClick={nextImage}><FaChevronRight /></button>
+                        <div className="carousel-counter-overlay">{activeImageIndex + 1} / {imageList.length}</div>
+                    </>
+                )}
+            </div>
+            
+            <div className="px-2 pb-3">
+                <h5 className="fw-bold mb-2" style={{color: '#E76F51'}}>Deskripsi Kegiatan</h5>
+                <p className="text-muted" style={{ lineHeight: '1.8', textAlign: 'justify' }}>
+                    {selectedProgram?.deskripsi}
+                </p>
+            </div>
+        </Modal.Body>
+        
+        <Modal.Footer className="border-0">
+           <Button variant="secondary" onClick={handleClose} className="rounded-pill px-4">
+            Tutup
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

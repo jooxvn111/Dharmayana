@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Container, Row, Col, Image, Button, Modal } from 'react-bootstrap';
+type ModalName = "bph" | "dld" | "kathina" | null;
 
 export default function ActivityPage() {
   

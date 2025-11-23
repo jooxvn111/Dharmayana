@@ -2,59 +2,72 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import Program from "@/models/Program";
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
+// Definisi Tipe Params (Promise)
+type Props = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
-  await dbConnect();
-  const program = await Program.findById(id);
+// GET Data by ID
+export async function GET(request: Request, props: Props) {
+  try {
+    // WAJIB AWAIT PARAMS DULU
+    const params = await props.params; 
+    
+    await dbConnect();
+    const program = await Program.findById(params.id);
 
-  if (!program) {
-    return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
+    if (!program) {
+      return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
+    }
+    return NextResponse.json(program);
+  } catch (error) {
+    return NextResponse.json({ error: "Gagal mengambil data" }, { status: 500 });
   }
-
-  return NextResponse.json(program);
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
-  const body = await req.json();
+// PUT (Update Data)
+export async function PUT(request: Request, props: Props) {
+  try {
+    // WAJIB AWAIT PARAMS DULU
+    const params = await props.params;
+    
+    await dbConnect();
+    const body = await request.json(); // Mengambil data body dari frontend
 
-  await dbConnect();
-
-  const updated = await Program.findByIdAndUpdate(id, body, { new: true });
-
-  if (!updated) {
-    return NextResponse.json(
-      { error: "Program tidak ditemukan" },
-      { status: 404 }
+    const updatedProgram = await Program.findByIdAndUpdate(
+      params.id,
+      {
+        nama: body.nama,
+        deskripsi: body.deskripsi,
+        gambar: body.gambar,
+        galeri: body.galeri // Update array galeri
+      },
+      { new: true }
     );
-  }
 
-  return NextResponse.json(updated);
+    if (!updatedProgram) {
+      return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedProgram);
+  } catch (error) {
+    return NextResponse.json({ error: "Gagal update program" }, { status: 500 });
+  }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
+// DELETE (Hapus Data)
+export async function DELETE(request: Request, props: Props) {
+    try {
+      // WAJIB AWAIT PARAMS DULU
+      const params = await props.params;
 
-  await dbConnect();
-
-  const deleted = await Program.findByIdAndDelete(id);
-
-  if (!deleted) {
-    return NextResponse.json(
-      { error: "Program tidak ditemukan" },
-      { status: 404 }
-    );
-  }
-
-  return NextResponse.json({ message: "Program berhasil dihapus" });
+      await dbConnect();
+      await Program.findByIdAndDelete(params.id);
+      
+      return NextResponse.json({ message: "Program deleted" });
+    } catch (error) {
+      return NextResponse.json({ error: "Gagal menghapus program" }, { status: 500 });
+    }
 }

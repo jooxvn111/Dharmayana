@@ -2,57 +2,56 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import Bph from "@/models/bph";
 
-export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+// GET Single Data (Untuk Edit)
+export async function GET(request: Request, props: Props) {
   try {
-    const { id } = await context.params;
-
+    const params = await props.params;
     await dbConnect();
-    const item = await Bph.findById(id);
-
-    return NextResponse.json(item || {}); 
-  } catch (err) {
-    console.error("API GET error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    const member = await Bph.findById(params.id);
+    if (!member) return NextResponse.json({ error: "Data tidak ditemukan" }, { status: 404 });
+    return NextResponse.json(member);
+  } catch (error) {
+    return NextResponse.json({ error: "Gagal mengambil data" }, { status: 500 });
   }
 }
 
-export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
+// PUT (Update Data)
+export async function PUT(request: Request, props: Props) {
   try {
-    const { id } = await context.params;
+    const params = await props.params;
     await dbConnect();
-    const body = await req.json();
+    const body = await request.json();
 
-    const updated = await Bph.findByIdAndUpdate(
-      id,
+    const updatedMember = await Bph.findByIdAndUpdate(
+      params.id,
       {
         nama: body.nama,
-        posisi: body.posisi,
-        gambar: body.gambar,
+        jabatan: body.jabatan,
+        divisi: body.divisi,
+        parentId: body.parentId || null, // Update Atasan
+        gambar: body.gambar
       },
       { new: true }
     );
 
-    return NextResponse.json(updated || {});
-  } catch (err) {
-    console.error("API PUT error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json(updatedMember);
+  } catch (error) {
+    return NextResponse.json({ error: "Gagal update" }, { status: 500 });
   }
 }
 
-export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
+// DELETE (Hapus Data)
+export async function DELETE(request: Request, props: Props) {
   try {
-    const { id } = await context.params;
-
+    const params = await props.params;
     await dbConnect();
-    const deleted = await Bph.findByIdAndDelete(id);
-
-    if (!deleted) {
-      return NextResponse.json({ error: "Tidak ditemukan" }, { status: 404 });
-    }
-
+    await Bph.findByIdAndDelete(params.id);
     return NextResponse.json({ message: "Berhasil dihapus" });
-  } catch (err) {
-    console.error("API DELETE error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: "Gagal menghapus" }, { status: 500 });
   }
 }

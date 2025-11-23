@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "^5.3.8",
     "formidable": "^3.5.4",
+    "html2canvas": "^1.4.1",
     "moment": "^2.30.1",
     "mongoose": "^8.19.3",
     "next": "16.0.1",
