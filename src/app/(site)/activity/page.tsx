@@ -59,72 +59,88 @@ export default function ActivityPage() {
   };
 
   return (
-    <div className="container py-5">
-      <div className="text-center mb-5">
-        <h1 className="fw-bold" style={{ color: "#8B0000" }}>Kalender Kegiatan Dharmayana</h1>
-        <p className="text-muted">Cek jadwal kegiatan kami di bawah ini</p>
-      </div>
-
-      <div className="row g-5">
-        {/* KALENDER */}
-        <div className="col-lg-5">
-          <div className="card border-0 shadow-sm p-3">
-            <style jsx global>{`
-              .react-calendar { width: 100%; border: none; font-family: sans-serif; }
-              .react-calendar__navigation button { font-size: 1.2rem; font-weight: bold; }
-              .react-calendar__tile--now { background: #fff3cd !important; color: #856404; }
-              .react-calendar__tile--active { background: #8B0000 !important; color: white !important; }
-            `}</style>
-            <Calendar onChange={setDate} value={date} tileContent={tileContent} locale="id-ID" />
-          </div>
-          <p className="text-center mt-3 small text-muted">
-            <span className="text-danger fw-bold">•</span> Titik merah menandakan ada kegiatan.
+    <>
+      {/* === HEADER SECTION === */}
+      <div 
+        style={{ 
+          backgroundColor: '#8B0000', 
+          padding: '80px 0', 
+          marginBottom: '50px',
+          textAlign: 'center'
+        }}
+      >
+        <div className="container">
+          {/* PAKSA WARNA PUTIH DISINI */}
+          <h1 className="fw-bold display-4" style={{ color: '#FFFFFF' }}>
+            Kalender Kegiatan
+          </h1>
+          <p className="lead opacity-75" style={{ color: '#f0f0f0' }}>
+            Jadwal kegiatan dan program kerja Dharmayana
           </p>
         </div>
+      </div>
 
-        {/* LIST EVENT */}
-        <div className="col-lg-7">
-          <div className="h-100 p-4 bg-white rounded shadow-sm">
-            <h4 className="fw-bold mb-4 pb-2 border-bottom">
-              Kegiatan Tanggal: <span className="text-danger">{format(date, "d MMMM yyyy", { locale: id })}</span>
-            </h4>
+      {/* === KONTEN KALENDER === */}
+      <div className="container pb-5">
+        <div className="row g-5">
+          <div className="col-lg-5">
+            <div className="card border-0 shadow-sm p-3 rounded-4">
+              <style jsx global>{`
+                .react-calendar { width: 100%; border: none; font-family: sans-serif; }
+                .react-calendar__navigation button { font-size: 1.2rem; font-weight: bold; color: #8B0000; }
+                .react-calendar__tile--now { background: #fff3cd !important; color: #856404; font-weight: bold; }
+                .react-calendar__tile--active { background: #8B0000 !important; color: white !important; }
+                .react-calendar__month-view__days__day--weekend { color: #d9534f; }
+              `}</style>
+              <Calendar onChange={setDate} value={date} tileContent={tileContent} locale="id-ID" />
+            </div>
+            <p className="text-center mt-3 small text-muted">
+              <span className="text-danger fw-bold fs-5">•</span> Titik merah menandakan ada kegiatan.
+            </p>
+          </div>
 
-            {selectedEvents.length > 0 ? (
-              <div className="d-flex flex-column gap-3">
-                {selectedEvents.map((item) => (
-                  <div key={item._id} className="card border-0 shadow-sm overflow-hidden">
-                    <div className="row g-0 align-items-center">
-                      <div className="col-4 col-sm-3">
-                        <img
-                          src={item.gambar || "/images/placeholder.jpg"}
-                          alt={item.nama}
-                          className="img-fluid h-100"
-                          style={{ objectFit: "cover", minHeight: "100px", width: "100%" }}
-                        />
-                      </div>
-                      <div className="col-8 col-sm-9">
-                        <div className="card-body py-2">
-                          <h5 className="card-title fw-bold mb-1">{item.nama}</h5>
-                          <p className="card-text text-muted small mb-0">
-                            {item.deskripsi.substring(0, 80)}...
-                          </p>
+          <div className="col-lg-7">
+            <div className="h-100 p-4 bg-white rounded-4 shadow-sm border">
+              <h4 className="fw-bold mb-4 pb-2 border-bottom" style={{ color: '#8B0000' }}>
+                Kegiatan Tanggal: <span className="text-dark">{format(date, "d MMMM yyyy", { locale: id })}</span>
+              </h4>
+
+              {selectedEvents.length > 0 ? (
+                <div className="d-flex flex-column gap-3">
+                  {selectedEvents.map((item) => (
+                    <div key={item._id} className="card border-0 shadow-sm overflow-hidden bg-light">
+                      <div className="row g-0 align-items-center">
+                        <div className="col-3">
+                          <img
+                            src={item.gambar || "/images/placeholder.jpg"}
+                            alt={item.nama}
+                            className="w-100 h-100"
+                            style={{ objectFit: "cover", minHeight: "100px" }}
+                          />
+                        </div>
+                        <div className="col-9">
+                          <div className="card-body py-2">
+                            <h5 className="card-title fw-bold mb-1 text-danger">{item.nama}</h5>
+                            <p className="card-text text-muted small mb-0 line-clamp-2">
+                              {item.deskripsi.substring(0, 80)}...
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-5">
-                <h5 className="text-muted">Tidak ada kegiatan di tanggal ini.</h5>
-              </div>
-            )}
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-5">
+                  <div className="fs-1 text-muted mb-3">📅</div>
+                  <h5 className="text-muted">Tidak ada kegiatan di tanggal ini.</h5>
+                  <p className="small text-secondary">Silakan pilih tanggal lain yang bertanda merah.</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      
-      {/* TIDAK ADA KODE FOOTER DISINI */}
-      {/* Footer akan otomatis muncul dari Layout.tsx */}
-    </div>
+    </>
   );
 }

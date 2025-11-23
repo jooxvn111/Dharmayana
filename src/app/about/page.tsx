@@ -153,8 +153,21 @@ export default function AboutPage() {
       {/* HERO SECTION */}
       <div className="about-hero-section">
         <Container>
-          <h1 className="about-hero-title">Tentang Kami</h1>
-          <p className="lead opacity-75">Mengenal lebih dekat KMB Dharmayana Untar</p>
+          {/* Perhatikan: style ditaruh DI DALAM tag h1 */}
+          <h1 
+            className="about-hero-title" 
+            style={{ color: '#FFFFFF' }} 
+          >
+            Tentang Kami
+          </h1>
+
+          {/* Jika ingin mengubah warna paragraf juga */}
+          <p 
+            className="lead opacity-75" 
+            style={{ color: '#FFFFFF' }}
+          >
+            Mengenal lebih dekat KMB Dharmayana Untar
+          </p>
         </Container>
       </div>
 
