@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { format, isSameDay } from "date-fns";
 import { id } from "date-fns/locale";
-import "react-calendar/dist/Calendar.css"; 
+import "react-calendar/dist/Calendar.css";
 
 type Program = {
   _id: string;
@@ -50,7 +50,15 @@ export default function ActivityPage() {
       if (hasEvent) {
         return (
           <div className="d-flex justify-content-center">
-            <div style={{ height: "6px", width: "6px", backgroundColor: "#dc3545", borderRadius: "50%", marginTop: "2px" }}></div>
+            <div
+              style={{
+                height: "6px",
+                width: "6px",
+                backgroundColor: "#dc3545",
+                borderRadius: "50%",
+                marginTop: "2px",
+              }}
+            ></div>
           </div>
         );
       }
@@ -60,37 +68,51 @@ export default function ActivityPage() {
 
   return (
     <>
-      {/* === HEADER SECTION === */}
-      <div 
-        style={{ 
-          backgroundColor: '#8B0000', 
-          padding: '80px 0', 
-          marginBottom: '50px',
-          textAlign: 'center'
+      <div
+        style={{
+          backgroundColor: "#8B0000",
+          padding: "80px 0",
+          marginBottom: "50px",
+          textAlign: "center",
         }}
       >
         <div className="container">
-          {/* PAKSA WARNA PUTIH DISINI */}
-          <h1 className="fw-bold display-4" style={{ color: '#FFFFFF' }}>
+          <h1 className="fw-bold display-4" style={{ color: "#FFFFFF" }}>
             Kalender Kegiatan
           </h1>
-          <p className="lead opacity-75" style={{ color: '#f0f0f0' }}>
+          <p className="lead opacity-75" style={{ color: "#f0f0f0" }}>
             Jadwal kegiatan dan program kerja Dharmayana
           </p>
         </div>
       </div>
 
-      {/* === KONTEN KALENDER === */}
       <div className="container pb-5">
         <div className="row g-5">
           <div className="col-lg-5">
             <div className="card border-0 shadow-sm p-3 rounded-4">
               <style jsx global>{`
-                .react-calendar { width: 100%; border: none; font-family: sans-serif; }
-                .react-calendar__navigation button { font-size: 1.2rem; font-weight: bold; color: #8B0000; }
-                .react-calendar__tile--now { background: #fff3cd !important; color: #856404; font-weight: bold; }
-                .react-calendar__tile--active { background: #8B0000 !important; color: white !important; }
-                .react-calendar__month-view__days__day--weekend { color: #d9534f; }
+                .react-calendar {
+                  width: 100%;
+                  border: none;
+                  font-family: sans-serif;
+                }
+                .react-calendar__navigation button {
+                  font-size: 1.2rem;
+                  font-weight: bold;
+                  color: #8b0000;
+                }
+                .react-calendar__tile--now {
+                  background: #fff3cd !important;
+                  color: #856404;
+                  font-weight: bold;
+                }
+                .react-calendar__tile--active {
+                  background: #8b0000 !important;
+                  color: white !important;
+                }
+                .react-calendar__month-view__days__day--weekend {
+                  color: #d9534f;
+                }
               `}</style>
               <Calendar onChange={setDate} value={date} tileContent={tileContent} locale="id-ID" />
             </div>
@@ -101,7 +123,7 @@ export default function ActivityPage() {
 
           <div className="col-lg-7">
             <div className="h-100 p-4 bg-white rounded-4 shadow-sm border">
-              <h4 className="fw-bold mb-4 pb-2 border-bottom" style={{ color: '#8B0000' }}>
+              <h4 className="fw-bold mb-4 pb-2 border-bottom" style={{ color: "#8B0000" }}>
                 Kegiatan Tanggal: <span className="text-dark">{format(date, "d MMMM yyyy", { locale: id })}</span>
               </h4>
 

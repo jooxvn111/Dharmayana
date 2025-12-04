@@ -3,10 +3,8 @@ import mongoose, { Schema } from "mongoose";
 const BphSchema = new Schema(
   {
     nama: { type: String, required: true },
-    jabatan: { type: String, required: true }, // Contoh: "Ketua Umum"
+    jabatan: { type: String, required: true },
     
-    // === FIELD BARU: KEDUDUKAN (KELOMPOK) ===
-    // Contoh: "BPH Inti", "Koordinator Divisi", "Anggota"
     kedudukan: { type: String, required: true }, 
     
     gambar: { type: String },

@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 import html2canvas from 'html2canvas';
 
-// --- TIPE DATA ---
 type Member = {
   _id: string;
   nama: string;
@@ -20,7 +19,6 @@ type Member = {
   isTemplate?: boolean;
 };
 
-// --- FUNGSI BUILD TREE ---
 function buildTreeWithFixedStructure(members: any[]) {
   const memberMap: any = {};
   const rootNode: Member = {
@@ -54,7 +52,6 @@ function buildTreeWithFixedStructure(members: any[]) {
   return [rootNode];
 }
 
-// --- KOMPONEN NODE ---
 const TreeNode = ({ node }: { node: Member }) => {
   const isTemplate = node.isTemplate;
   const isRoot = node._id === "root-dharmayana";
@@ -150,29 +147,14 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* HERO SECTION */}
       <div className="about-hero-section">
         <Container>
-          {/* Perhatikan: style ditaruh DI DALAM tag h1 */}
-          <h1 
-            className="about-hero-title" 
-            style={{ color: '#FFFFFF' }} 
-          >
-            Tentang Kami
-          </h1>
-
-          {/* Jika ingin mengubah warna paragraf juga */}
-          <p 
-            className="lead opacity-75" 
-            style={{ color: '#FFFFFF' }}
-          >
-            Mengenal lebih dekat KMB Dharmayana Untar
-          </p>
+          <h1 className="about-hero-title" style={{ color: '#FFFFFF' }}>Tentang Kami</h1>
+          <p className="lead opacity-75" style={{ color: '#FFFFFF' }}>Mengenal lebih dekat KMB Dharmayana Untar</p>
         </Container>
       </div>
 
       <Container className="mb-5">
-        {/* === BAGIAN 1: PENJELASAN (SUDAH DIISI LENGKAP) === */}
         <Row className="align-items-center mb-5 g-5">
           <Col md={6}>
              <Image 
@@ -197,7 +179,6 @@ export default function AboutPage() {
           </Col>
         </Row>
         
-        {/* === BAGIAN 2: VISI & MISI (SUDAH DIISI) === */}
         <Row className="mb-5 g-4">
             <Col md={6}>
                 <div className="vision-card">
@@ -226,7 +207,6 @@ export default function AboutPage() {
             </Col>
         </Row>
 
-        {/* === BAGIAN 3: DIVISI (SUDAH DIPERBAIKI: BD = BERITA DHARMAYANA) === */}
         <div className="division-section">
             <Row className="px-4">
                 <Col md={6} className="text-center p-4">
@@ -241,9 +221,7 @@ export default function AboutPage() {
                 
                 <Col md={6} className="position-relative">
                     <div className="d-none d-md-block position-absolute start-0 top-0 bottom-0 border-start border-2 border-secondary opacity-25"></div>
-                    
                     <div className="text-center p-4">
-                        {/* Icon Koran/Berita */}
                         <FaNewspaper size={50} color="#E76F51" className="mb-3"/> 
                         <h3 className="division-title">BD (Berita Dharmayana)</h3>
                         <p className="text-muted small">
@@ -256,7 +234,6 @@ export default function AboutPage() {
             </Row>
         </div>
 
-        {/* === BAGIAN 4: STRUKTUR ORGANISASI === */}
         <Row className="text-center mb-3 mt-5">
             <Col>
                 <h2 className="fw-bold text-secondary">Struktur Kepengurusan</h2>

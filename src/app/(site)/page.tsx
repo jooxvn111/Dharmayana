@@ -3,22 +3,17 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Image, Modal, Button } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight, FaChevronDown } from "react-icons/fa";
-// Import Format Tanggal
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
 
 export default function Home() {
   const [program, setProgram] = useState<any[]>([]);
-  
-  // State Modal & Carousel
   const [showModal, setShowModal] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<any>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Load Data Program
   async function loadProgram() {
     try {
-      // PERBAIKAN: Tambahkan cache: "no-store" agar data selalu update (mengatasi tanggal hilang)
       const res = await fetch("/api/program", { cache: "no-store" });
       const data = await res.json();
       if (Array.isArray(data)) {
@@ -36,7 +31,6 @@ export default function Home() {
     loadProgram();
   }, []);
 
-  // Handle Klik Kartu
   const handleCardClick = (item: any) => {
     setSelectedProgram(item);
     setActiveImageIndex(0); 
@@ -45,7 +39,6 @@ export default function Home() {
 
   const handleClose = () => setShowModal(false);
 
-  // Logic Carousel
   const imageList = selectedProgram
     ? [
         selectedProgram.gambar || "/images/default.jpg", 
@@ -67,7 +60,6 @@ export default function Home() {
 
   return (
     <>
-      {/* === HERO SECTION (VIDEO) - Desain Asli Anda === */}
       <div className="heroVideoSection">
         <video autoPlay loop muted playsInline className="videoBackground">
           <source src="https://cdn.coverr.co/videos/coverr-meditating-by-the-river-5219/1080p.mp4" type="video/mp4" />
@@ -102,7 +94,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* === PROGRAM SECTION === */}
       <div id="content-start"></div> 
       
       <Container className="py-5 mt-4 mb-5">
@@ -136,14 +127,11 @@ export default function Home() {
                       <Card.Title className="fw-bold mb-2" style={{color: '#8D1D2C', fontFamily:'Playfair Display'}}>
                         {item.nama}
                       </Card.Title>
-                      
-                      {/* --- UPDATE: Tampilkan Tanggal di Kartu Depan --- */}
                       {item.tanggal && (
                         <div className="small fw-bold text-danger mb-2">
                            📅 {format(new Date(item.tanggal), "d MMMM yyyy", { locale: id })}
                         </div>
                       )}
-
                       <Card.Text className="small text-muted mb-3" style={{
                           display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden'
                       }}>
@@ -167,7 +155,6 @@ export default function Home() {
         </Row>
       </Container>
 
-      {/* === MODAL POPUP (GABUNGAN DESAIN BOOTSTRAP + FITUR TANGGAL) === */}
       <Modal 
         show={showModal} 
         onHide={handleClose} 
@@ -182,7 +169,6 @@ export default function Home() {
         </Modal.Header>
 
         <Modal.Body className="pt-0">
-            {/* Carousel Gambar */}
             <div className="carousel-container-fixed"> 
                 <Image 
                     src={imageList[activeImageIndex]} 
@@ -201,7 +187,6 @@ export default function Home() {
             </div>
             
             <div className="px-2 pb-3 mt-4">
-                {/* === FITUR TANGGAL (KOTAK MERAH MUDA) === */}
                 <div className="d-flex align-items-center p-3 mb-4 rounded-3" style={{ backgroundColor: '#fff5f5', borderLeft: '5px solid #E76F51' }}>
                     <span className="fs-2 me-3">📅</span>
                     <div>
@@ -213,7 +198,6 @@ export default function Home() {
                         </span>
                     </div>
                 </div>
-                {/* ========================================= */}
 
                 <h5 className="fw-bold mb-2" style={{color: '#E76F51'}}>Deskripsi Kegiatan</h5>
                 <p className="text-muted" style={{ lineHeight: '1.8', textAlign: 'justify' }}>

@@ -2,15 +2,13 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/dbConnect";
 import Program from "@/models/Program";
 
-// Tipe Params untuk Next.js 15
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-// 1. GET: Ambil Data (Perbaikan await params)
 export async function GET(req: Request, { params }: Props) {
   try {
-    const { id } = await params; // <--- WAJIB AWAIT DISINI
+    const { id } = await params;
     await dbConnect();
 
     const program = await Program.findById(id);
@@ -23,10 +21,9 @@ export async function GET(req: Request, { params }: Props) {
   }
 }
 
-// 2. PUT: Update Data (Perbaikan await params)
 export async function PUT(req: Request, { params }: Props) {
   try {
-    const { id } = await params; // <--- WAJIB AWAIT DISINI
+    const { id } = await params;
     await dbConnect();
     const body = await req.json();
 
@@ -35,11 +32,9 @@ export async function PUT(req: Request, { params }: Props) {
       return NextResponse.json({ error: "Program tidak ditemukan" }, { status: 404 });
     }
 
-    // Update Field
     program.nama = body.nama || program.nama;
     program.deskripsi = body.deskripsi || program.deskripsi;
     
-    // Update Tanggal (Penting)
     if (body.tanggal) {
       program.tanggal = body.tanggal;
     }
@@ -56,10 +51,9 @@ export async function PUT(req: Request, { params }: Props) {
   }
 }
 
-// 3. DELETE: Hapus Data (Perbaikan await params)
 export async function DELETE(req: Request, { params }: Props) {
   try {
-    const { id } = await params; // <--- WAJIB AWAIT DISINI
+    const { id } = await params;
     await dbConnect();
     
     const deleted = await Program.findByIdAndDelete(id);

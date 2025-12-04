@@ -20,7 +20,9 @@ export default function GalleryPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Yakin hapus gambar ini?")) return;
-    await fetch(`http://localhost:5000/api/gallery/${id}`, { method: "DELETE" });
+    const res = await fetch(`http://localhost:5000/api/gallery/${id}`, { method: "DELETE" });
+    const data = await res.json();
+    if (data.error) return alert("Gagal hapus gallery!");
     setData(prev => prev.filter(item => item._id !== id));
   };
 
@@ -30,7 +32,7 @@ export default function GalleryPage() {
       <Link href="/admin/gallery/tambah" className="btn btn-primary mb-3">+ Tambah Gambar</Link>
 
       <div className="row">
-        {data.map((item) => (
+        {data.map(item => (
           <div key={item._id} className="col-md-3 mb-3">
             <div className="card">
               <img src={item.url} className="card-img-top" alt={item.title} />

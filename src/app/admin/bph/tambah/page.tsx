@@ -9,29 +9,21 @@ export default function TambahBphPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  // Form Data
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");
   const [divisi, setDivisi] = useState("BPH");
   const [parentId, setParentId] = useState("");
   const [gambar, setGambar] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
-
-  // Fitur Search Atasan
-  const [searchParent, setSearchParent] = useState(""); 
-
-  // Data Master
+  const [searchParent, setSearchParent] = useState("");
   const [existingMembers, setExistingMembers] = useState<any[]>([]);
 
-  // 1. Load Data
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch("/api/bph");
         const data = await res.json();
-        if (Array.isArray(data)) {
-          setExistingMembers(data);
-        }
+        if (Array.isArray(data)) setExistingMembers(data);
       } catch (err) {
         console.error("Gagal load data", err);
       }
@@ -39,7 +31,6 @@ export default function TambahBphPage() {
     fetchData();
   }, []);
 
-  // 2. Handle Foto
   const handleImage = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -56,7 +47,6 @@ export default function TambahBphPage() {
     return data.url;
   }
 
-  // 3. Submit
   async function handleSubmit(e: any) {
     e.preventDefault();
     setLoading(true);
@@ -71,7 +61,7 @@ export default function TambahBphPage() {
         divisi,
         gambar: imageUrl,
         parentId: parentId || null,
-        kedudukan: "General" // Default value agar database tidak error
+        kedudukan: "General"
       };
 
       const res = await fetch("/api/bph", {
@@ -86,18 +76,18 @@ export default function TambahBphPage() {
       } else {
         toast.error("Gagal menyimpan");
       }
-    } catch (err) {
+    } catch {
       toast.error("Terjadi kesalahan");
     } finally {
       setLoading(false);
     }
   }
 
-  // LOGIC SEARCH: Filter nama/jabatan + Filter Divisi
   const filteredParents = existingMembers.filter(m => {
     const matchDivisi = m.divisi === divisi;
-    const matchSearch = m.nama.toLowerCase().includes(searchParent.toLowerCase()) || 
-                        m.jabatan.toLowerCase().includes(searchParent.toLowerCase());
+    const matchSearch =
+      m.nama.toLowerCase().includes(searchParent.toLowerCase()) ||
+      m.jabatan.toLowerCase().includes(searchParent.toLowerCase());
     return matchDivisi && matchSearch;
   });
 
@@ -111,8 +101,6 @@ export default function TambahBphPage() {
 
       <div className="card p-4 shadow-sm bg-white">
         <form onSubmit={handleSubmit} className="row g-3">
-          
-          {/* DIVISI */}
           <div className="col-12">
             <label className="form-label fw-bold">Divisi</label>
             <select className="form-select" value={divisi} onChange={(e) => setDivisi(e.target.value)}>
@@ -121,7 +109,6 @@ export default function TambahBphPage() {
             </select>
           </div>
 
-          {/* NAMA & JABATAN */}
           <div className="col-md-6">
             <label className="form-label fw-bold">Nama Lengkap</label>
             <input className="form-control" value={nama} onChange={(e) => setNama(e.target.value)} required />
@@ -131,51 +118,43 @@ export default function TambahBphPage() {
             <input className="form-control" value={jabatan} onChange={(e) => setJabatan(e.target.value)} required />
           </div>
 
-          {/* --- BAGIAN PILIH ATASAN (Disederhanakan) --- */}
           <div className="col-12 my-2">
             <hr className="text-muted" />
             <p className="fw-bold text-primary mb-2">Pilih Atasan (Parent)</p>
           </div>
 
           <div className="col-12 bg-light p-3 rounded border">
-            {/* KOTAK CARI */}
             <div className="mb-2">
-                <label className="form-label small text-muted fw-bold">Cari Nama Atasan:</label>
-                <input 
-                    type="text" 
-                    className="form-control form-control-sm"
-                    placeholder="Ketik nama atasan (cth: Tannia)..."
-                    value={searchParent}
-                    onChange={(e) => setSearchParent(e.target.value)}
-                />
+              <label className="form-label small text-muted fw-bold">Cari Nama Atasan:</label>
+              <input 
+                type="text" 
+                className="form-control form-control-sm"
+                placeholder="Ketik nama atasan (cth: Tannia)..."
+                value={searchParent}
+                onChange={(e) => setSearchParent(e.target.value)}
+              />
             </div>
 
-            {/* DROPDOWN HASIL */}
             <label className="form-label small text-muted fw-bold">Hasil Pencarian:</label>
             <select 
               className="form-select" 
               value={parentId} 
               onChange={(e) => setParentId(e.target.value)}
-              size={5} // List memanjang ke bawah (5 baris)
+              size={5}
             >
               <option value="">-- Tidak Ada (Jadikan Root/Ketua) --</option>
-              
               {filteredParents.map((m) => (
-                  <option key={m._id} value={m._id}>
-                     {m.nama} — {m.jabatan}
-                  </option>
+                <option key={m._id} value={m._id}>
+                  {m.nama} — {m.jabatan}
+                </option>
               ))}
-
               {filteredParents.length === 0 && (
                 <option disabled>Tidak ditemukan...</option>
               )}
             </select>
-            <small className="text-muted d-block mt-1">
-              *Klik nama di dalam kotak untuk memilih.
-            </small>
+            <small className="text-muted d-block mt-1">*Klik nama di dalam kotak untuk memilih.</small>
           </div>
 
-          {/* FOTO */}
           <div className="col-12 mt-3">
             <label className="form-label fw-bold">Foto Profil</label>
             <input type="file" className="form-control" accept="image/*" onChange={handleImage} />
@@ -187,7 +166,6 @@ export default function TambahBphPage() {
               {loading ? "Menyimpan..." : "Simpan Struktur"}
             </button>
           </div>
-
         </form>
       </div>
     </div>

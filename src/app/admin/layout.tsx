@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </li>
 
           <li style={{ marginBottom: "12px" }}>
-            <Link href="/admin/galeri" style={{ color: "white", textDecoration: "none" }}>
+            <Link href="/admin/gallery" style={{ color: "white", textDecoration: "none" }}>
               Galeri
             </Link>
           </li>

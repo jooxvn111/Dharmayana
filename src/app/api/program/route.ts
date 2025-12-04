@@ -5,8 +5,7 @@ import Program from "@/models/Program";
 export async function GET() {
   try {
     await dbConnect();
-    // Urutkan berdasarkan tanggal acara (terdekat duluan), bukan tanggal dibuat
-    const programs = await Program.find().sort({ tanggal: 1 }); 
+    const programs = await Program.find().sort({ tanggal: 1 });
     return NextResponse.json(programs);
   } catch (err) {
     return NextResponse.json({ error: "Gagal mengambil data" }, { status: 500 });
@@ -18,17 +17,16 @@ export async function POST(req: Request) {
     await dbConnect();
     const body = await req.json();
 
-    // Validasi sederhana
     if (!body.nama || !body.tanggal || !body.deskripsi) {
-        return NextResponse.json({ error: "Nama, Tanggal, dan Deskripsi wajib diisi" }, { status: 400 });
+      return NextResponse.json({ error: "Nama, Tanggal, dan Deskripsi wajib diisi" }, { status: 400 });
     }
 
     const created = await Program.create({
       nama: body.nama,
-      tanggal: new Date(body.tanggal), // Pastikan format Date
+      tanggal: new Date(body.tanggal),
       deskripsi: body.deskripsi,
-      gambar: body.gambar,       
-      galeri: body.galeri || []  
+      gambar: body.gambar,
+      galeri: body.galeri || []
     });
 
     return NextResponse.json(created, { status: 201 });

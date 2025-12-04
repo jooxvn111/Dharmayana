@@ -8,13 +8,15 @@ export default function Footer() {
     <footer className="custom-footer">
       <Container className="py-5">
         <Row className="gy-4">
-          {/* Kolom 1: Branding */}
           <Col md={4}>
-            <h4 className="fw-bold text-white mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <h4
+              className="fw-bold text-white mb-3"
+              style={{ fontFamily: "Playfair Display, serif" }}
+            >
               Dharmayana Untar
             </h4>
             <p className="text-white-50 small">
-              Wadah kekeluargaan mahasiswa Buddhis Universitas Tarumanagara. 
+              Wadah kekeluargaan mahasiswa Buddhis Universitas Tarumanagara.
               Menjunjung tinggi semangat Metta, Karuna, Mudita, dan Upekkha.
             </p>
             <div className="d-flex gap-3 mt-3">
@@ -24,7 +26,6 @@ export default function Footer() {
             </div>
           </Col>
 
-          {/* Kolom 2: Quick Links */}
           <Col md={2} xs={6}>
             <h6 className="fw-bold text-warning mb-3">Menu</h6>
             <ul className="list-unstyled text-white-50 small d-flex flex-column gap-2">
@@ -35,7 +36,6 @@ export default function Footer() {
             </ul>
           </Col>
 
-          {/* Kolom 3: Program */}
           <Col md={2} xs={6}>
             <h6 className="fw-bold text-warning mb-3">Kegiatan</h6>
             <ul className="list-unstyled text-white-50 small d-flex flex-column gap-2">
@@ -46,7 +46,6 @@ export default function Footer() {
             </ul>
           </Col>
 
-          {/* Kolom 4: Kontak */}
           <Col md={4}>
             <h6 className="fw-bold text-warning mb-3">Hubungi Kami</h6>
             <ul className="list-unstyled text-white-50 small">
@@ -63,7 +62,6 @@ export default function Footer() {
         </Row>
       </Container>
 
-      {/* Copyright Bar */}
       <div className="copyright-bar text-center py-3">
         <small className="text-white-50">
           &copy; {new Date().getFullYear()} KMB Dharmayana Untar. All Rights Reserved.

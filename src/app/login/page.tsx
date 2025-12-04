@@ -31,11 +31,32 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen d-flex align-items-center justify-content-center bg-light">
-      <div className="card shadow p-4" style={{ width: "380px", borderRadius: "18px" }}>
-        <h3 className="text-center mb-4 fw-bold">Login</h3>
+    <div
+      className="min-vh-100 d-flex align-items-center justify-content-center"
+      style={{
+        background: "linear-gradient(135deg, #ffe9c4, #fff8ee)",
+      }}
+    >
+      <div
+        className="shadow p-4 bg-white"
+        style={{
+          width: "380px",
+          borderRadius: "20px",
+        }}
+      >
+        <h3 className="text-center mb-3 fw-bold text-dark">Login</h3>
+        <p className="text-center text-muted mb-4">
+          Masuk ke halaman admin Dharmayana
+        </p>
 
-        {msg && <div className="alert alert-danger text-center">{msg}</div>}
+        {msg && (
+          <div
+            className="alert alert-danger text-center py-2"
+            style={{ borderRadius: "10px" }}
+          >
+            {msg}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -45,6 +66,11 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Masukkan username"
+              style={{
+                borderRadius: "10px",
+                padding: "10px",
+                borderColor: "#ddd",
+              }}
             />
           </div>
 
@@ -56,17 +82,41 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Masukkan password"
+              style={{
+                borderRadius: "10px",
+                padding: "10px",
+                borderColor: "#ddd",
+              }}
             />
           </div>
 
-          <button className="btn btn-primary w-100 py-2 mt-2 fw-semibold">
+          <button
+            className="btn w-100 py-2 fw-semibold mt-2"
+            style={{
+              background: "#ffb347",
+              borderRadius: "10px",
+              border: "none",
+              color: "white",
+              transition: "0.2s",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = "#ff9f1c")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background = "#ffb347")
+            }
+          >
             Login
           </button>
         </form>
 
-        <p className="text-center mt-3">
+        <p className="text-center mt-3 mb-0">
           Belum punya akun?
-          <Link href="/register" className="ms-1 text-primary fw-semibold" style={{ textDecoration: "none" }}>
+          <Link
+            href="/register"
+            className="ms-1 fw-semibold"
+            style={{ textDecoration: "none", color: "#d67a00" }}
+          >
             Register
           </Link>
         </p>

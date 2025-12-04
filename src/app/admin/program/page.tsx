@@ -2,132 +2,131 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
-export default function AdminProgramPage() {
-  // PENTING: Inisialisasi dengan array kosong []
-  const [program, setProgram] = useState<any[]>([]); 
+interface Program {
+  _id: string;
+  nama: string;
+  deskripsi: string;
+  gambar: string;
+}
+
+export default function ProgramPage() {
+  const [data, setData] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("asc");
-  const [filter, setFilter] = useState("all");
 
-  async function loadData() {
+  const load = async () => {
     try {
-      const res = await fetch("/api/program");
-      const data = await res.json();
+      const res = await fetch("http://localhost:5000/api/program");
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-      // PENGAMAN: Cek apakah data benar-benar Array?
-      if (Array.isArray(data)) {
-        setProgram(data);
-      } else {
-        console.error("Data bukan array:", data);
-        setProgram([]); // Kalau bukan array, paksa jadi array kosong biar gak error
-      }
+      const json: Program[] = await res.json();
+      setData(json);
     } catch (err) {
-      console.error("Gagal fetch program:", err);
-      toast.error("Gagal memuat data program");
-      setProgram([]);
+      console.error("Gagal mengambil data program:", err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadData();
+    load();
   }, []);
 
-  // Fungsi Hapus Program
-  async function handleDelete(id: string) {
+  const handleDelete = async (id: string) => {
     if (!confirm("Yakin ingin menghapus program ini?")) return;
 
     try {
-      const res = await fetch(`/api/program/${id}`, { method: "DELETE" });
+      const res = await fetch(`http://localhost:5000/api/program/${id}`, {
+        method: "DELETE",
+      });
+
       if (res.ok) {
-        toast.success("Program berhasil dihapus");
-        loadData(); // Refresh data
+        load();
       } else {
-        toast.error("Gagal menghapus program");
+        alert("Gagal menghapus program.");
       }
     } catch (err) {
-      toast.error("Terjadi kesalahan saat menghapus");
+      console.error("Gagal menghapus:", err);
+      alert("Terjadi kesalahan saat menghapus program.");
     }
+  };
+
+  if (loading) {
+    return <div className="text-center p-5">⏳ Memuat data...</div>;
   }
 
   return (
     <div className="container py-4">
-      <ToastContainer />
-      
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold text-secondary">Kelola Program Kerja</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <h1 className="fw-bold text-primary">Daftar Program</h1>
+
         <Link href="/admin/program/tambah">
-          <button className="btn btn-primary">+ Tambah Program</button>
+          <button className="btn btn-primary d-flex align-items-center shadow-sm">
+            <FaPlus className="me-2" /> Tambah Program
+          </button>
         </Link>
       </div>
 
-      <div className="card shadow-sm border-0">
-        <div className="card-body p-0">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
-              <thead className="bg-light">
-                <tr>
-                  <th className="p-3 text-center" style={{ width: "50px" }}>No</th>
-                  <th>Thumbnail</th>
-                  <th>Nama Program</th>
-                  <th>Deskripsi</th>
-                  <th className="text-end pe-4">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* PENGAMAN DI SINI JUGA: Cek Array.isArray sebelum map */}
-                {loading ? (
-                  <tr>
-                    <td colSpan={5} className="text-center py-5">Memuat data...</td>
-                  </tr>
-                ) : Array.isArray(program) && program.length > 0 ? (
-                  program.map((item, index) => (
-                    <tr key={item._id || index}>
-                      <td className="text-center fw-bold text-muted">{index + 1}</td>
-                      <td>
-                        <img
-                          src={item.gambar || "/images/default.jpg"}
-                          alt={item.nama}
-                          className="rounded border"
-                          style={{ width: "60px", height: "40px", objectFit: "cover" }}
-                        />
-                      </td>
-                      <td className="fw-bold">{item.nama}</td>
-                      <td className="text-muted small">
-                        {item.deskripsi?.substring(0, 50)}...
-                      </td>
-                      <td className="text-end pe-4">
-                        <div className="d-inline-flex gap-2">
-                          <Link href={`/admin/program/edit/${item._id}`}>
-                            <button className="btn btn-sm btn-warning text-white fw-bold">Edit</button>
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(item._id)}
-                            className="btn btn-sm btn-danger fw-bold"
-                          >
-                            Hapus
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="text-center py-5 text-muted">
-                      Belum ada program kerja.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+      {data.length === 0 ? (
+        <div className="alert alert-info text-center mt-5">
+          <p className="lead mb-0">Belum ada program yang terdaftar.</p>
+          <small className="text-muted">Klik "Tambah Program" untuk mulai.</small>
         </div>
-      </div>
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-hover align-middle">
+            <thead className="table-primary">
+              <tr>
+                <th style={{ width: "80px" }}>Gambar</th>
+                <th>Nama</th>
+                <th>Deskripsi</th>
+                <th style={{ width: "160px" }}>Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {data.map((p) => (
+                <tr key={p._id}>
+                  <td>
+                    <img
+                      src={p.gambar}
+                      alt={p.nama}
+                      className="img-fluid rounded"
+                      style={{ width: "70px", height: "70px", objectFit: "cover" }}
+                    />
+                  </td>
+
+                  <td className="fw-semibold">{p.nama}</td>
+
+                  <td className="text-muted">
+                    {p.deskripsi?.length > 100
+                      ? p.deskripsi.substring(0, 100) + "..."
+                      : p.deskripsi}
+                  </td>
+
+                  <td>
+                    <div className="d-flex gap-2">
+                      <Link href={`/admin/program/edit/${p._id}`}>
+                        <button className="btn btn-sm btn-outline-warning">
+                          <FaEdit className="me-1" /> Edit
+                        </button>
+                      </Link>
+
+                      <button
+                        onClick={() => handleDelete(p._id)}
+                        className="btn btn-sm btn-outline-danger"
+                      >
+                        <FaTrash className="me-1" /> Hapus
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

@@ -6,7 +6,6 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-// GET Single Data (Untuk Edit)
 export async function GET(request: Request, props: Props) {
   try {
     const params = await props.params;
@@ -19,7 +18,6 @@ export async function GET(request: Request, props: Props) {
   }
 }
 
-// PUT (Update Data)
 export async function PUT(request: Request, props: Props) {
   try {
     const params = await props.params;
@@ -32,7 +30,7 @@ export async function PUT(request: Request, props: Props) {
         nama: body.nama,
         jabatan: body.jabatan,
         divisi: body.divisi,
-        parentId: body.parentId || null, // Update Atasan
+        parentId: body.parentId || null,
         gambar: body.gambar
       },
       { new: true }
@@ -44,7 +42,6 @@ export async function PUT(request: Request, props: Props) {
   }
 }
 
-// DELETE (Hapus Data)
 export async function DELETE(request: Request, props: Props) {
   try {
     const params = await props.params;

@@ -6,7 +6,6 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 export default function ContactPage() {
   return (
     <>
-      {/* === HEADER SECTION === */}
       <div 
         style={{ 
           backgroundColor: '#8B0000', 
@@ -16,7 +15,6 @@ export default function ContactPage() {
         }}
       >
         <div className="container">
-          {/* PAKSA WARNA PUTIH DISINI */}
           <h1 className="fw-bold display-4" style={{ color: '#FFFFFF' }}>
             Hubungi Kami
           </h1>
@@ -26,7 +24,6 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* === KONTEN UTAMA === */}
       <Container className="mb-5">
         <div className="bg-light p-4 p-md-5 rounded text-dark shadow-sm">
           <Row className="align-items-center">
