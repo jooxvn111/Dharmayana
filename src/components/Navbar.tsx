@@ -36,7 +36,7 @@ export default function NavigationBar() {
             <Nav.Link href="/site" className="fw-medium">Home</Nav.Link>
             
             {/* Update 3: About Link ke /site/about (Asumsi folder about ada di dalam site) */}
-            <Nav.Link href="/site/about" className="fw-medium">About</Nav.Link>
+            <Nav.Link href="/about" className="fw-medium">About</Nav.Link>
             
             {/* Update 4: Activity Link ke /site/activity (INI YANG BIKIN ERROR 404 SEBELUMNYA) */}
             <Nav.Link href="/site/activity" className="fw-medium">Activity</Nav.Link>
