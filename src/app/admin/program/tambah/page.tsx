@@ -5,13 +5,17 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function ProgramTambahPage() {
+export default function AddProgramPage() {
   const router = useRouter();
+<<<<<<< HEAD
 
   // State Form
+=======
+>>>>>>> 18ac8ec (gas)
   const [nama, setNama] = useState("");
   const [tanggal, setTanggal] = useState(""); // Input Tanggal
   const [deskripsi, setDeskripsi] = useState("");
+<<<<<<< HEAD
   
   // State Gambar
   const [gambar, setGambar] = useState<File | null>(null);
@@ -103,12 +107,53 @@ export default function ProgramTambahPage() {
       toast.error("Terjadi kesalahan sistem");
     } finally {
       setIsUploading(false);
+=======
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      let gambar = "";
+
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const uploadRes = await fetch("http://localhost:5000/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) throw new Error("Gagal upload");
+        const uploadData = await uploadRes.json();
+        gambar = uploadData.url;
+      }
+
+      const res = await fetch("http://localhost:5000/api/program", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nama, deskripsi, gambar }),
+      });
+
+      if (!res.ok) throw new Error("Gagal menyimpan program");
+      toast.success("Program berhasil ditambahkan");
+      router.push("/admin/program");
+    } catch (err) {
+      toast.error("Gagal menyimpan program");
+      console.error(err);
+    } finally {
+      setLoading(false);
+>>>>>>> 18ac8ec (gas)
     }
-  }
+  };
 
   return (
-    <div className="container py-4">
+    <div className="container mt-4 max-w-xl">
       <ToastContainer />
+<<<<<<< HEAD
       <h2 className="fw-bold mb-4">Tambah Program Baru</h2>
       
       <div className="card shadow-sm p-4">
@@ -165,6 +210,44 @@ export default function ProgramTambahPage() {
           </button>
         </form>
       </div>
+=======
+      <h2 className="mb-3">Tambah Program</h2>
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div>
+          <label>Nama Program</label>
+          <input
+            className="form-control"
+            value={nama}
+            onChange={(e) => setNama(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="mt-2">Deskripsi</label>
+          <textarea
+            className="form-control"
+            value={deskripsi}
+            onChange={(e) => setDeskripsi(e.target.value)}
+            rows={4}
+          />
+        </div>
+
+        <div>
+          <label className="mt-2">Gambar (opsional)</label>
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+          />
+        </div>
+
+        <button className="btn btn-primary mt-3" disabled={loading}>
+          {loading ? "Menyimpan..." : "Simpan"}
+        </button>
+      </form>
+>>>>>>> 18ac8ec (gas)
     </div>
   );
 }

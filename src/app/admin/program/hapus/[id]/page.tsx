@@ -9,7 +9,7 @@ export default function HapusProgram({ params }: any) {
 
   useEffect(() => {
     async function doDelete() {
-      await fetch(`/api/program/${id}`, { method: "DELETE" });
+      await fetch(`http://localhost:5000/api/program/${id}`, { method: "DELETE" });
       router.push("/admin/program");
     }
     doDelete();

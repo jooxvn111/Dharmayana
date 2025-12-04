@@ -2,40 +2,35 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import React from "react";
 
-export default function LoginPage() {
-  const router = useRouter();
+export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/auth/login", {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
 
     const data = await res.json();
-
-    if (!res.ok) {
-      setMsg(data.msg);
-      return;
-    }
-
-    document.cookie = `authToken=STATIC-TOKEN-123; path=/`;
-    router.push("/admin");
+    setMsg(data.msg);
   }
 
   return (
     <div className="min-h-screen d-flex align-items-center justify-content-center bg-light">
-      <div className="card shadow p-4" style={{ width: "380px", borderRadius: "18px" }}>
-        <h3 className="text-center mb-4 fw-bold">Login</h3>
+      <div
+        className="card shadow p-4"
+        style={{ width: "380px", borderRadius: "18px" }}
+      >
+        <h3 className="text-center mb-4 fw-bold">Register</h3>
 
-        {msg && <div className="alert alert-danger text-center">{msg}</div>}
+        {msg && <div className="alert alert-info text-center">{msg}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -43,8 +38,8 @@ export default function LoginPage() {
             <input
               className="form-control"
               value={username}
+              placeholder="Buat username"
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Masukkan username"
             />
           </div>
 
@@ -54,20 +49,24 @@ export default function LoginPage() {
               type="password"
               className="form-control"
               value={password}
+              placeholder="Buat password"
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Masukkan password"
             />
           </div>
 
           <button className="btn btn-primary w-100 py-2 mt-2 fw-semibold">
-            Login
+            Register
           </button>
         </form>
 
         <p className="text-center mt-3">
-          Belum punya akun?
-          <Link href="/register" className="ms-1 text-primary fw-semibold" style={{ textDecoration: "none" }}>
-            Register
+          Sudah punya akun?
+          <Link
+            href="/login"
+            className="ms-1 text-primary fw-semibold"
+            style={{ textDecoration: "none" }}
+          >
+            Login
           </Link>
         </p>
       </div>

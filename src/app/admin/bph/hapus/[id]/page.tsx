@@ -9,7 +9,7 @@ export default function HapusBPH({ params }: any) {
 
   useEffect(() => {
     async function doDelete() {
-      await fetch(`/api/bph/${id}`, { method: "DELETE" });
+      await fetch(`http://localhost:5000/api/bph/${id}`, { method: "DELETE" });
       router.push("/admin/bph");
     }
     doDelete();

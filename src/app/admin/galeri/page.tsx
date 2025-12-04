@@ -1,52 +1,48 @@
+"use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-import Image from "next/image";
-import styles from "./GalleryAdmin.module.css";
+interface Gallery {
+  _id: string;
+  title: string;
+  url: string;
+}
 
-const allImages = [
-  { url: "/images/gallery-dwp/baby.jpg", title: "DWP" },
-  { url: "/images/gallery-dwp/image.png", title: "DWP" },
-  { url: "/images/gallery-dwp/rokok.jpg", title: "DWP" },
-  
-  { url: "/images/gallery-kathina/kucing.jpg", title: "Kathina" },
-  { url: "/images/gallery-kathina/oo.jpg", title: "Kathina" },
-  { url: "/images/gallery-kathina/sad.jpg", title: "Kathina" },
+export default function GalleryPage() {
+  const [data, setData] = useState<Gallery[]>([]);
 
-  { url: "/images/gallery-dd/burung.jpg", title: "Darmadhista" },
-  { url: "/images/gallery-dd/bwa.jpg", title: "Darmadhista" },
-  { url: "/images/gallery-dd/cachedImage.png", title: "Darmadhista" },
-];
+  useEffect(() => {
+    fetch("http://localhost:5000/api/gallery")
+      .then(res => res.json())
+      .then(result => setData(result));
+  }, []);
 
-
-
-export default function AdminGalleryPage() {
+  const handleDelete = async (id: string) => {
+    if (!confirm("Yakin hapus gambar ini?")) return;
+    await fetch(`http://localhost:5000/api/gallery/${id}`, { method: "DELETE" });
+    setData(prev => prev.filter(item => item._id !== id));
+  };
 
   return (
-    <>
-      <div className={styles.header}>
-        <h1>Manajemen Galeri</h1>
-        <p>Semua gambar dari semua program kegiatan.</p>
-      </div>
+    <div className="container mt-4">
+      <h1 className="mb-3">Gallery</h1>
+      <Link href="/admin/gallery/tambah" className="btn btn-primary mb-3">+ Tambah Gambar</Link>
 
-      {allImages.length > 0 ? (
-        <div className={styles.gridContainer}>
-          {allImages.map((image, index) => (
-            <div key={index} className={styles.imageCard}>
-              <Image
-                src={image.url}
-                alt={`Galeri ${image.title} - ${index + 1}`}
-                fill
-                className={styles.image}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+      <div className="row">
+        {data.map((item) => (
+          <div key={item._id} className="col-md-3 mb-3">
+            <div className="card">
+              <img src={item.url} className="card-img-top" alt={item.title} />
+              <div className="card-body">
+                <h5 className="card-title">{item.title}</h5>
+                <Link href={`/admin/gallery/edit/${item._id}`} className="btn btn-warning btn-sm me-2">Edit</Link>
+                <button onClick={() => handleDelete(item._id)} className="btn btn-danger btn-sm">Hapus</button>
+              </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className={styles.noImages}>
-          Belum ada gambar di galeri program manapun.
-        </p>
-      )}
-    </>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

@@ -9,6 +9,9 @@ export default function AdminProgramPage() {
   // PENTING: Inisialisasi dengan array kosong []
   const [program, setProgram] = useState<any[]>([]); 
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("asc");
+  const [filter, setFilter] = useState("all");
 
   async function loadData() {
     try {
