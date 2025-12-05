@@ -41,14 +41,16 @@ export default function AdminBphPage() {
 
   const getParentName = (parentId: string) => {
     const parent = members.find(m => m._id === parentId);
-    return parent ? parent.nama : "ROOT (Paling Atas)";
+    return parent ? parent.nama || "Unnamed" : "ROOT (Paling Atas)";
   };
 
+  // Filter data aman tanpa error .toLowerCase()
   const filteredMembers = members.filter(member => {
     const matchDivisi = filterDivisi === "ALL" || member.divisi === filterDivisi;
     const query = search.toLowerCase();
-    const matchSearch = member.nama.toLowerCase().includes(query) || 
-                        member.jabatan.toLowerCase().includes(query);
+    const matchSearch =
+      (member.nama || "").toLowerCase().includes(query) ||
+      (member.jabatan || "").toLowerCase().includes(query);
     return matchDivisi && matchSearch;
   });
 
@@ -119,16 +121,16 @@ export default function AdminBphPage() {
                         src={m.gambar || "/images/default-profile.jpg"} 
                         className="rounded-circle border" 
                         style={{width:'45px', height:'45px', objectFit:'cover'}} 
-                        alt={m.nama}
+                        alt={m.nama || "Unnamed"}
                       />
                     </td>
                     <td>
-                      <div className="fw-bold text-dark">{m.nama}</div>
-                      <div className="small text-muted">{m.jabatan}</div>
+                      <div className="fw-bold text-dark">{m.nama || "Unnamed"}</div>
+                      <div className="small text-muted">{m.jabatan || "-"}</div>
                     </td>
                     <td>
                       <span className={`badge ${m.divisi === 'BPH' ? 'bg-danger' : 'bg-warning text-dark'}`}>
-                        {m.divisi}
+                        {m.divisi || "-"}
                       </span>
                     </td>
                     <td className="text-muted small">{getParentName(m.parentId)}</td>

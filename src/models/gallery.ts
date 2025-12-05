@@ -3,7 +3,7 @@ import mongoose, { Schema, model, models } from "mongoose";
 const GallerySchema = new Schema(
   {
     title: { type: String, required: true },
-    url: { type: String, required: true }, // Pastikan ini 'url', bukan 'image'
+    url: { type: String, required: true }, 
   },
   { timestamps: true }
 );

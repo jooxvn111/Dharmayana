@@ -16,12 +16,10 @@ export default function ProgramPage() {
   const [filteredPrograms, setFilteredPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Search & filter state
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  // Load data dari backend
   async function loadData() {
     try {
       const res = await fetch("http://localhost:5000/api/program");
@@ -39,25 +37,21 @@ export default function ProgramPage() {
     loadData();
   }, []);
 
-  // Filtering setiap kali search atau tanggal berubah
   useEffect(() => {
     let filtered = programs;
 
-    // Filter berdasarkan search nama
     if (search) {
       filtered = filtered.filter((p) =>
         p.nama.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Filter berdasarkan tanggal start
     if (startDate) {
       filtered = filtered.filter(
         (p) => p.tanggal && new Date(p.tanggal) >= new Date(startDate)
       );
     }
 
-    // Filter berdasarkan tanggal end
     if (endDate) {
       filtered = filtered.filter(
         (p) => p.tanggal && new Date(p.tanggal) <= new Date(endDate)
@@ -88,7 +82,6 @@ export default function ProgramPage() {
         </Link>
       </div>
 
-      {/* Search & Filter */}
       <div className="d-flex gap-2 mb-3">
         <input
           type="text"
@@ -193,6 +186,7 @@ export default function ProgramPage() {
                 </td>
               </tr>
             ))}
+
             {filteredPrograms.length === 0 && (
               <tr>
                 <td colSpan={5} className="text-center text-muted py-3">

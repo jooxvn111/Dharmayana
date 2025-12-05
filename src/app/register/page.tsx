@@ -30,24 +30,26 @@ export default function RegisterPage() {
     <div
       className="min-vh-100 d-flex align-items-center justify-content-center"
       style={{
-        background: "linear-gradient(135deg, #ffe9c4, #fff8ee)", // Background gradasi sama dengan Login
+        background: "linear-gradient(135deg, #ffe9c4, #fff8ee)",
       }}
     >
       <div
         className="shadow p-4 bg-white"
         style={{
           width: "380px",
-          borderRadius: "20px", // Style kartu melengkung
+          borderRadius: "20px",
         }}
       >
         <h3 className="text-center mb-3 fw-bold text-dark">Register</h3>
-        <p className="text-center text-muted mb-4">
-          Buat akun admin baru
-        </p>
+        <p className="text-center text-muted mb-4">Buat akun admin baru</p>
 
         {msg && (
           <div
-            className={`alert ${msg.toLowerCase().includes('berhasil') ? 'alert-success' : 'alert-danger'} text-center py-2`}
+            className={`alert ${
+              msg.toLowerCase().includes("berhasil")
+                ? "alert-success"
+                : "alert-danger"
+            } text-center py-2`}
             style={{ borderRadius: "10px" }}
           >
             {msg}
@@ -89,18 +91,14 @@ export default function RegisterPage() {
           <button
             className="btn w-100 py-2 fw-semibold mt-2"
             style={{
-              background: "#ffb347", // Warna oranye Login
+              background: "#ffb347",
               borderRadius: "10px",
               border: "none",
               color: "white",
               transition: "0.2s",
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#ff9f1c")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#ffb347")
-            }
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#ff9f1c")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#ffb347")}
           >
             Register
           </button>
@@ -111,7 +109,7 @@ export default function RegisterPage() {
           <Link
             href="/login"
             className="ms-1 fw-semibold"
-            style={{ textDecoration: "none", color: "#d67a00" }} // Warna link oranye gelap
+            style={{ textDecoration: "none", color: "#d67a00" }}
           >
             Login
           </Link>

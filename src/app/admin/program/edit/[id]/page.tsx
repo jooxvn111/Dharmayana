@@ -11,8 +11,6 @@ export default function EditProgramPage() {
   const [nama, setNama] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
   const [gambar, setGambar] = useState("");
-
-  // ==== FIELD BARU ====
   const [tanggal, setTanggal] = useState("");
 
   useEffect(() => {
@@ -24,9 +22,7 @@ export default function EditProgramPage() {
         setNama(data.nama);
         setDeskripsi(data.deskripsi);
         setGambar(data.gambar);
-
-        // ==== SET TANGGAL ====
-        setTanggal(data.tanggal || ""); // format YYYY-MM-DD
+        setTanggal(data.tanggal || "");
       } catch (err) {
         console.error("Gagal fetch:", err);
       } finally {
@@ -63,7 +59,7 @@ export default function EditProgramPage() {
         nama,
         deskripsi,
         gambar,
-        tanggal, // ← TAMBAHKAN INI
+        tanggal,
       }),
     });
 
@@ -94,7 +90,6 @@ export default function EditProgramPage() {
             />
           </div>
 
-          {/* ========== FIELD TANGGAL ========== */}
           <div className="mb-3">
             <label className="fw-semibold mb-1">Tanggal Program</label>
             <input
@@ -104,7 +99,6 @@ export default function EditProgramPage() {
               onChange={(e) => setTanggal(e.target.value)}
             />
           </div>
-          {/* =================================== */}
 
           <div className="mb-3">
             <label className="fw-semibold mb-1">Deskripsi</label>
