@@ -64,7 +64,7 @@ export default function Footer() {
 
       <div className="copyright-bar text-center py-3">
         <small className="text-white-50">
-          &copy; {new Date().getFullYear()} KMB Dharmayana Untar. All Rights Reserved.
+          &copy; {new Date().getFullYear()} KMB Dharmayana Univesitas Tarumanagara. All Rights Reserved.
         </small>
       </div>
     </footer>
