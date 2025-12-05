@@ -64,7 +64,7 @@ export default function Home() {
       <div className="heroVideoSection">
         <video autoPlay loop muted playsInline className="videoBackground">
           {/* --- PERBAIKAN DI SINI --- */}
-          {/* Karena file ada di public/videos/Teaser.mp4, panggil dengan /videos/... */}
+          {/* Karena file kamu ada di folder 'public/videos', maka panggilnya harus pakai '/videos/' */}
           <source src="/videos/Teaser.mp4" type="video/mp4" />
         </video>
         
