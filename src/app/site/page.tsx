@@ -60,11 +60,16 @@ export default function Home() {
 
   return (
     <>
+      {/* === BAGIAN HERO VIDEO === */}
       <div className="heroVideoSection">
         <video autoPlay loop muted playsInline className="videoBackground">
-          <source src="https://cdn.coverr.co/videos/coverr-meditating-by-the-river-5219/1080p.mp4" type="video/mp4" />
+          {/* --- PERBAIKAN DI SINI --- */}
+          {/* Karena file ada di public/videos/Teaser.mp4, panggil dengan /videos/... */}
+          <source src="/videos/Teaser.mp4" type="video/mp4" />
         </video>
+        
         <div className="videoOverlay"></div>
+        
         <Container className="heroContent">
           <div className="mb-4">
              <Image 
@@ -88,6 +93,7 @@ export default function Home() {
             Lihat Kegiatan Kami
           </button>
         </Container>
+        
         <div className="scrollDown" onClick={scrollToContent}>
             <span className="small d-block mb-1 fw-bold">Scroll Down</span>
             <FaChevronDown size={20} />
@@ -96,6 +102,7 @@ export default function Home() {
 
       <div id="content-start"></div> 
       
+      {/* === BAGIAN PROGRAM KERJA === */}
       <Container className="py-5 mt-4 mb-5">
         <Row className="text-center mb-5">
           <Col>
@@ -155,6 +162,7 @@ export default function Home() {
         </Row>
       </Container>
 
+      {/* === MODAL POPUP === */}
       <Modal 
         show={showModal} 
         onHide={handleClose} 
