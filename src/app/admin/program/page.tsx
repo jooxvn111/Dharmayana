@@ -2,131 +2,207 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
-interface Program {
+type Program = {
   _id: string;
   nama: string;
   deskripsi: string;
   gambar: string;
-}
+  tanggal: string;
+};
 
 export default function ProgramPage() {
-  const [data, setData] = useState<Program[]>([]);
+  const [programs, setPrograms] = useState<Program[]>([]);
+  const [filteredPrograms, setFilteredPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const load = async () => {
+  // Search & filter state
+  const [search, setSearch] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  // Load data dari backend
+  async function loadData() {
     try {
       const res = await fetch("http://localhost:5000/api/program");
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-      const json: Program[] = await res.json();
-      setData(json);
+      const data = await res.json();
+      setPrograms(data);
+      setFilteredPrograms(data);
     } catch (err) {
-      console.error("Gagal mengambil data program:", err);
+      console.error("Gagal mengambil data:", err);
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    load();
-  }, []);
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Yakin ingin menghapus program ini?")) return;
-
-    try {
-      const res = await fetch(`http://localhost:5000/api/program/${id}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        load();
-      } else {
-        alert("Gagal menghapus program.");
-      }
-    } catch (err) {
-      console.error("Gagal menghapus:", err);
-      alert("Terjadi kesalahan saat menghapus program.");
-    }
-  };
-
-  if (loading) {
-    return <div className="text-center p-5">⏳ Memuat data...</div>;
   }
 
-  return (
-    <div className="container py-4">
-      <div className="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
-        <h1 className="fw-bold text-primary">Daftar Program</h1>
+  useEffect(() => {
+    loadData();
+  }, []);
 
-        <Link href="/admin/program/tambah">
-          <button className="btn btn-primary d-flex align-items-center shadow-sm">
-            <FaPlus className="me-2" /> Tambah Program
-          </button>
+  // Filtering setiap kali search atau tanggal berubah
+  useEffect(() => {
+    let filtered = programs;
+
+    // Filter berdasarkan search nama
+    if (search) {
+      filtered = filtered.filter((p) =>
+        p.nama.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Filter berdasarkan tanggal start
+    if (startDate) {
+      filtered = filtered.filter(
+        (p) => p.tanggal && new Date(p.tanggal) >= new Date(startDate)
+      );
+    }
+
+    // Filter berdasarkan tanggal end
+    if (endDate) {
+      filtered = filtered.filter(
+        (p) => p.tanggal && new Date(p.tanggal) <= new Date(endDate)
+      );
+    }
+
+    setFilteredPrograms(filtered);
+  }, [search, startDate, endDate, programs]);
+
+  async function handleDelete(id: string) {
+    if (!confirm("Hapus program ini?")) return;
+
+    await fetch(`http://localhost:5000/api/program/${id}`, {
+      method: "DELETE",
+    });
+
+    setPrograms((prev) => prev.filter((p) => p._id !== id));
+  }
+
+  if (loading) return <div className="p-4">Memuat data...</div>;
+
+  return (
+    <div className="container py-4" style={{ maxWidth: 1050 }}>
+      <div className="d-flex justify-content-between mb-3">
+        <h2 className="fw-bold">Daftar Program</h2>
+        <Link href="/admin/program/tambah" className="btn btn-primary">
+          Tambah Program
         </Link>
       </div>
 
-      {data.length === 0 ? (
-        <div className="alert alert-info text-center mt-5">
-          <p className="lead mb-0">Belum ada program yang terdaftar.</p>
-          <small className="text-muted">Klik "Tambah Program" untuk mulai.</small>
-        </div>
-      ) : (
-        <div className="table-responsive">
-          <table className="table table-hover align-middle">
-            <thead className="table-primary">
-              <tr>
-                <th style={{ width: "80px" }}>Gambar</th>
-                <th>Nama</th>
-                <th>Deskripsi</th>
-                <th style={{ width: "160px" }}>Aksi</th>
-              </tr>
-            </thead>
+      {/* Search & Filter */}
+      <div className="d-flex gap-2 mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Cari nama program..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <input
+          type="date"
+          className="form-control"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <input
+          type="date"
+          className="form-control"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <button
+          className="btn btn-secondary"
+          onClick={() => {
+            setSearch("");
+            setStartDate("");
+            setEndDate("");
+          }}
+        >
+          Reset
+        </button>
+      </div>
 
-            <tbody>
-              {data.map((p) => (
-                <tr key={p._id}>
-                  <td>
+      <div className="table-responsive shadow-sm border rounded">
+        <table className="table table-hover align-middle mb-0">
+          <thead className="table-primary">
+            <tr>
+              <th style={{ width: "80px" }}>Gambar</th>
+              <th>Nama</th>
+              <th>Deskripsi</th>
+              <th style={{ width: "160px" }}>Tanggal</th>
+              <th style={{ width: "160px" }}>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredPrograms.map((p) => (
+              <tr key={p._id}>
+                <td>
+                  {p.gambar && p.gambar.trim() !== "" ? (
                     <img
                       src={p.gambar}
-                      alt={p.nama}
-                      className="img-fluid rounded"
-                      style={{ width: "70px", height: "70px", objectFit: "cover" }}
+                      style={{
+                        width: 70,
+                        height: 55,
+                        objectFit: "cover",
+                        borderRadius: 6,
+                        background: "#f2f2f2",
+                      }}
                     />
-                  </td>
-
-                  <td className="fw-semibold">{p.nama}</td>
-
-                  <td className="text-muted">
-                    {p.deskripsi?.length > 100
-                      ? p.deskripsi.substring(0, 100) + "..."
-                      : p.deskripsi}
-                  </td>
-
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link href={`/admin/program/edit/${p._id}`}>
-                        <button className="btn btn-sm btn-outline-warning">
-                          <FaEdit className="me-1" /> Edit
-                        </button>
-                      </Link>
-
-                      <button
-                        onClick={() => handleDelete(p._id)}
-                        className="btn btn-sm btn-outline-danger"
-                      >
-                        <FaTrash className="me-1" /> Hapus
-                      </button>
+                  ) : (
+                    <div
+                      style={{
+                        width: 70,
+                        height: 55,
+                        background: "#e0e0e0",
+                        borderRadius: 6,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#777",
+                        fontSize: 12,
+                      }}
+                    >
+                      No Image
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+                  )}
+                </td>
+
+                <td className="fw-semibold">{p.nama}</td>
+                <td style={{ maxWidth: 350 }}>{p.deskripsi}</td>
+                <td>
+                  {p.tanggal
+                    ? new Date(p.tanggal).toLocaleDateString("id-ID")
+                    : "-"}
+                </td>
+                <td>
+                  <div className="d-flex gap-2">
+                    <Link
+                      href={`/admin/program/edit/${p._id}`}
+                      className="btn btn-warning btn-sm"
+                    >
+                      Edit
+                    </Link>
+
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(p._id)}
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {filteredPrograms.length === 0 && (
+              <tr>
+                <td colSpan={5} className="text-center text-muted py-3">
+                  Tidak ada data program.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -14,6 +14,9 @@ export default function TambahProgramPage() {
   const [gambar, setGambar] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
 
+  // ==== FIELD BARU ====
+  const [tanggal, setTanggal] = useState("");
+
   const handleThumbnailChange = (e: any) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -51,7 +54,12 @@ export default function TambahProgramPage() {
       const res = await fetch("http://localhost:5000/api/program", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nama, deskripsi, gambar: gambarUrl }),
+        body: JSON.stringify({
+          nama,
+          deskripsi,
+          gambar: gambarUrl,
+          tanggal, // ← DITAMBAHKAN
+        }),
       });
 
       if (!res.ok) {
@@ -90,6 +98,19 @@ export default function TambahProgramPage() {
               required
             />
           </div>
+
+          {/* ========== FIELD TANGGAL BARU ========== */}
+          <div className="col-12">
+            <label className="form-label fw-semibold">Tanggal Program</label>
+            <input
+              type="date"
+              className="form-control form-control-lg"
+              value={tanggal}
+              onChange={(e) => setTanggal(e.target.value)}
+              required
+            />
+          </div>
+          {/* ======================================== */}
 
           <div className="col-12">
             <label className="form-label fw-semibold">Deskripsi</label>

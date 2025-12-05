@@ -12,6 +12,9 @@ export default function ProgramEditPage({ params }: any) {
   const [gambar, setGambar] = useState<File | null>(null);
   const [oldImage, setOldImage] = useState("");
 
+  // ⭐ Tambahan: tanggal
+  const [tanggal, setTanggal] = useState("");
+
   async function load() {
     const res = await fetch(`/api/program/${id}`);
     const data = await res.json();
@@ -19,6 +22,9 @@ export default function ProgramEditPage({ params }: any) {
     setNama(data.nama);
     setDeskripsi(data.deskripsi);
     setOldImage(data.gambar);
+
+    // ⭐ Set tanggal existing
+    setTanggal(data.tanggal?.split("T")[0] || "");
   }
 
   async function handleSubmit(e: any) {
@@ -37,7 +43,12 @@ export default function ProgramEditPage({ params }: any) {
     await fetch(`/api/program/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nama, deskripsi, gambar: imageUrl }),
+      body: JSON.stringify({
+        nama,
+        deskripsi,
+        gambar: imageUrl,
+        tanggal, // ⭐ kirim tanggal
+      }),
     });
 
     router.push("/admin/program");
@@ -52,7 +63,8 @@ export default function ProgramEditPage({ params }: any) {
       <h2 className="text-xl font-bold mb-3">Edit Program</h2>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-
+        
+        {/* Nama */}
         <div>
           <label>Nama Program</label>
           <input
@@ -62,6 +74,7 @@ export default function ProgramEditPage({ params }: any) {
           />
         </div>
 
+        {/* Deskripsi */}
         <div>
           <label>Deskripsi</label>
           <textarea
@@ -71,19 +84,37 @@ export default function ProgramEditPage({ params }: any) {
           />
         </div>
 
+        {/* ⭐ Input Tanggal */}
+        <div>
+          <label>Tanggal Program</label>
+          <input
+            type="date"
+            className="border p-2 w-full"
+            value={tanggal}
+            onChange={(e) => setTanggal(e.target.value)}
+          />
+        </div>
+
+        {/* Gambar lama */}
         <div>
           <label>Gambar Lama</label>
           <img src={oldImage} className="w-40 rounded border my-2" />
         </div>
 
+        {/* Ganti gambar */}
         <div>
           <label>Ganti Gambar (opsional)</label>
-          <input type="file" onChange={(e) => setGambar(e.target.files?.[0] || null)} />
+          <input
+            type="file"
+            onChange={(e) => setGambar(e.target.files?.[0] || null)}
+          />
         </div>
 
+        {/* Submit */}
         <button className="px-4 py-2 bg-blue-600 text-white rounded">
           Simpan Perubahan
         </button>
+
       </form>
     </div>
   );

@@ -12,6 +12,9 @@ export default function EditProgramPage() {
   const [deskripsi, setDeskripsi] = useState("");
   const [gambar, setGambar] = useState("");
 
+  // ==== FIELD BARU ====
+  const [tanggal, setTanggal] = useState("");
+
   useEffect(() => {
     async function loadData() {
       try {
@@ -21,6 +24,9 @@ export default function EditProgramPage() {
         setNama(data.nama);
         setDeskripsi(data.deskripsi);
         setGambar(data.gambar);
+
+        // ==== SET TANGGAL ====
+        setTanggal(data.tanggal || ""); // format YYYY-MM-DD
       } catch (err) {
         console.error("Gagal fetch:", err);
       } finally {
@@ -53,7 +59,12 @@ export default function EditProgramPage() {
     const res = await fetch(`http://localhost:5000/api/program/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nama, deskripsi, gambar }),
+      body: JSON.stringify({
+        nama,
+        deskripsi,
+        gambar,
+        tanggal, // ← TAMBAHKAN INI
+      }),
     });
 
     if (res.ok) {
@@ -82,6 +93,18 @@ export default function EditProgramPage() {
               placeholder="Masukkan nama program..."
             />
           </div>
+
+          {/* ========== FIELD TANGGAL ========== */}
+          <div className="mb-3">
+            <label className="fw-semibold mb-1">Tanggal Program</label>
+            <input
+              type="date"
+              className="form-control"
+              value={tanggal}
+              onChange={(e) => setTanggal(e.target.value)}
+            />
+          </div>
+          {/* =================================== */}
 
           <div className="mb-3">
             <label className="fw-semibold mb-1">Deskripsi</label>
